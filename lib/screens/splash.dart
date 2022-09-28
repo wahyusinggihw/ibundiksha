@@ -12,34 +12,39 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   void initialize() async {
     await Future.delayed(Duration(seconds: 3));
-    Navigator.pushNamedAndRemoveUntil(context, routeLoginScreen, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, routeLoginScreen, (route) => false);
   }
 
   @override
   void initState() {
     super.initState();
     initialize();
-  } 
-
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
-          Center(
-            child: Icon(
-              Icons.account_balance_wallet,
-              size: 100,
+          Hero(
+            tag: 'logo',
+            child: Center(
+              child: Image(
+                image: AssetImage('assets/images/logo.png'),
+                width: 200,
+                height: 200,
+              ),
             ),
-            ),
-            SizedBox(height: 20),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            )
+          ),
+          SizedBox(height: 20),
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.cyan),
+          )
         ],
       ),
     );

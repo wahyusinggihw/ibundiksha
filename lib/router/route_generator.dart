@@ -10,9 +10,9 @@ class RouterGenerator {
       case routeSplashScreen:
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case routeLoginScreen:
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => LoginScreen());
       case routeHomeScreen:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute(builder: (_) => HomeScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
