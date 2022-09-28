@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Koperasi Undiksha",
-      initialRoute: routeHomeScreen,
+      initialRoute: routeLoginScreen,
       onGenerateRoute: RouterGenerator.generateRoute,
     );
   }

@@ -14,6 +14,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Koperasi Undiksha'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.cyan,
       ),
@@ -78,15 +79,15 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        onPressed: () {
-                          // Navigator.pushNamed(context, '/home');
-                        },
                         child: Container(
                             width: width * 0.2,
                             child: Text(
                               'Login',
                               textAlign: TextAlign.center,
                             )),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
                       ),
                       const SizedBox(height: 10),
                       Row(
@@ -114,7 +115,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           Spacer(),
-          about(context, "Copyright" + '©' + "2021 By Undiksha"),
+          about(context, "Copyright" + '©' + "2022 By Undiksha"),
         ],
       ),
     );
