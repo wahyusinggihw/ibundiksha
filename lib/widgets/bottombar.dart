@@ -35,7 +35,8 @@ class _BottomBarState extends State<BottomBar> {
           children: [
             listPage.elementAt(pageIndex),
             Padding(
-              padding: const EdgeInsets.only(bottom: 30),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.05),
               child: Align(
                 alignment: const Alignment(0.0, 1.1),
                 child: BottomNavigationBar(
@@ -49,9 +50,8 @@ class _BottomBarState extends State<BottomBar> {
                     setState(() {
                       pageIndex = index;
                     });
-                  }
-                  // ignore: prefer_const_literals_to_create_immutables
-                  ,
+                    print(index);
+                  },
                   items: const [
                     BottomNavigationBarItem(
                         icon: Icon(Icons.settings_outlined),
@@ -93,7 +93,7 @@ class _BottomBarState extends State<BottomBar> {
                       setState(() {
                         pageIndex = 1;
                       });
-                      print('qrscan');
+                      // print('qrscan');
                     },
                   ),
                 ),
@@ -105,22 +105,3 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 }
-
-// Widget _qrScan = Padding(
-//   padding: const EdgeInsets.only(bottom: 50),
-//   child: Align(
-//     alignment: const Alignment(0.0, 1.1),
-//     child: Container(
-//       width: 70,
-//       height: 70,
-//       decoration: BoxDecoration(
-//         color: Colors.cyan,
-//         borderRadius: BorderRadius.circular(50),
-//       ),
-//       child: Icon(
-//         Icons.qr_code_scanner_rounded,
-//         size: 40,
-//       ),
-//     ),
-//   ),
-// );

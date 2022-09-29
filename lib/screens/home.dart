@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 
@@ -7,6 +8,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var menuGrid = MenuHome().menuGrid;
+    var bioBox = MenuHome.bioBox;
+    var mainContainer = MenuHome.mainContainer;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Koperasi Undiksha'),
@@ -30,21 +35,10 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.2,
+          mainContainer(
+            context,
             width: MediaQuery.of(context).size.width - 20,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.grey.shade400),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 6,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
+            height: MediaQuery.of(context).size.height * 0.2,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -61,290 +55,54 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Nasabah",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text("Wahyu Singgih Wicaksono"),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
+                      bioBox(context, 'Nama', 'Wahyu Singgih Wicaksono'),
+                      const SizedBox(
                         height: 5,
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Total Saldo Anda",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              Text("Rp. 100.000"),
-                            ],
-                          ),
-                        ),
-                      ),
+                      bioBox(context, 'Saldo', 'Rp. 100.000'),
                     ],
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Container(
-            // height: MediaQuery.of(context).size.height * 0.2,
+          mainContainer(
+            context,
             width: MediaQuery.of(context).size.width - 20,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.grey.shade400),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 6,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
             child: Table(
               children: [
                 TableRow(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  MdiIcons.walletOutline,
-                                  color: Colors.cyan,
-                                  size: 60,
-                                ),
-                                onTap: () {
-                                  print("saldo");
-                                },
-                              ),
-                              Text(
-                                "Saldo",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  MdiIcons.bankTransferOut,
-                                  color: Colors.cyan,
-                                  size: 60,
-                                ),
-                                onTap: () {
-                                  print("transfer");
-                                },
-                              ),
-                              Text(
-                                "Transfer",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  MdiIcons.cashPlus,
-                                  color: Colors.cyan,
-                                  size: 60,
-                                ),
-                                onTap: () {
-                                  print("deposit");
-                                },
-                              ),
-                              Text(
-                                "Deposit",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    menuGrid(context, 'Saldo', MdiIcons.wallet, '/saldo'),
+                    menuGrid(context, 'Transfer', MdiIcons.bankTransferOut,
+                        '/transfer'),
+                    menuGrid(context, 'Deposit', MdiIcons.cashPlus, '/deposit'),
                   ],
                 ),
                 TableRow(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  MdiIcons.creditCardOutline,
-                                  color: Colors.cyan,
-                                  size: 60,
-                                ),
-                                onTap: () {
-                                  print("pembayaran");
-                                },
-                              ),
-                              Text(
-                                "Pembayaran",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  MdiIcons.handCoinOutline,
-                                  color: Colors.cyan,
-                                  size: 60,
-                                ),
-                                onTap: () {
-                                  print("pinjaman");
-                                },
-                              ),
-                              Text(
-                                "Pinjaman",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print("mutasi");
-                                },
-                                child: Icon(
-                                  MdiIcons.creditCardRefundOutline,
-                                  color: Colors.cyan,
-                                  size: 60,
-                                ),
-                              ),
-                              Text(
-                                "Mutasi",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    menuGrid(context, 'Pembayaran', MdiIcons.creditCardOutline,
+                        '/pembayaran'),
+                    menuGrid(context, 'Pinjaman', MdiIcons.handCoinOutline,
+                        '/pinjaman'),
+                    menuGrid(context, 'Mutasi',
+                        MdiIcons.creditCardRefundOutline, '/mutasi'),
                   ],
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -359,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       Text(
                         "Butuh Bantuan?",
                         style: TextStyle(
@@ -371,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.phone,
                   size: 80,
                   color: Colors.cyan,
