@@ -22,4 +22,14 @@ class Dialogs {
       ),
     );
   }
+
+  snackBarCustom(String title, Color color) {
+    SnackBar(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: color,
+      duration: Duration(seconds: 2),
+      content: Text(title),
+    );
+  }
 }

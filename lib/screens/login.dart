@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/services/login_services.dart';
 import 'package:ibundiksha/widgets/about.dart';
+import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import '../widgets/appbar.dart';
+import 'package:ibundiksha/services/login_services.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.height;
     var mainContainer = MenuHome.mainContainer;
+    var loginService = Services().loginService;
+    var snackBarCustom = Dialogs().snackBarCustom;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,6 +51,7 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Form(
+                key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: mainContainer(
@@ -52,11 +67,18 @@ class LoginScreen extends StatelessWidget {
                             child: Text("Username"),
                           ),
                           Container(
-                            height: 50,
+                            // height: 50,
                             child: TextFormField(
+                              controller: usernameController,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                               ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Username cant empty";
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -65,11 +87,18 @@ class LoginScreen extends StatelessWidget {
                             child: Text("Password"),
                           ),
                           Container(
-                            height: 50,
+                            // height: 60,
                             child: TextFormField(
+                              controller: passwordController,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                               ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Password cant empty";
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -88,8 +117,62 @@ class LoginScreen extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/main');
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  var message = await loginService(
+                                      usernameController.text,
+                                      passwordController.text);
+                                  if (message!.contains("Success")) {
+                                    var loginSuccess = SnackBar(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      behavior: SnackBarBehavior.floating,
+                                      dismissDirection:
+                                          DismissDirection.horizontal,
+                                      backgroundColor: Colors.blue,
+                                      duration: Duration(seconds: 2),
+                                      content: Text(
+                                        "Signed in as ${usernameController.text}",
+                                      ),
+                                      margin: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height -
+                                              160,
+                                          right: 20,
+                                          left: 20),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(loginSuccess);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/home', (route) => false);
+                                  } else {
+                                    var loginFailed = SnackBar(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      behavior: SnackBarBehavior.floating,
+                                      dismissDirection:
+                                          DismissDirection.horizontal,
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 2),
+                                      content: Text(
+                                        "Login failed",
+                                      ),
+                                      margin: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height -
+                                              160,
+                                          right: 20,
+                                          left: 20),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(loginFailed);
+                                  }
+                                }
+                                // Navigator.pushNamed(context, '/main');
                               },
                             ),
                           ),
