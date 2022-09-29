@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:ibundiksha/widgets/dialogs.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +18,10 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             splashRadius: 20,
             icon: const Icon(Icons.logout),
-            onPressed: () {},
+            onPressed: () {
+              Dialogs().showAlertDialog(
+                  context, 'Logout', 'Anda yakin ingin logout?', '/login');
+            },
           ),
         ],
       ),
@@ -76,7 +80,12 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Nasabah"),
+                              Text(
+                                "Nasabah",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               Text("Wahyu Singgih Wicaksono"),
                             ],
                           ),
@@ -97,7 +106,10 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Total Saldo Anda"),
+                              Text("Total Saldo Anda",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  )),
                               Text("Rp. 100.000"),
                             ],
                           ),
@@ -144,12 +156,20 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
-                                MdiIcons.walletOutline,
-                                color: Colors.cyan,
-                                size: 60,
+                              GestureDetector(
+                                child: Icon(
+                                  MdiIcons.walletOutline,
+                                  color: Colors.cyan,
+                                  size: 60,
+                                ),
+                                onTap: () {
+                                  print("saldo");
+                                },
                               ),
-                              Text("Saldo"),
+                              Text(
+                                "Saldo",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -169,16 +189,19 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  print("object");
-                                },
                                 child: Icon(
                                   MdiIcons.bankTransferOut,
                                   color: Colors.cyan,
                                   size: 60,
                                 ),
+                                onTap: () {
+                                  print("transfer");
+                                },
                               ),
-                              Text("Transfer"),
+                              Text(
+                                "Transfer",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -198,16 +221,19 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  print("object");
-                                },
                                 child: Icon(
                                   MdiIcons.cashPlus,
                                   color: Colors.cyan,
                                   size: 60,
                                 ),
+                                onTap: () {
+                                  print("deposit");
+                                },
                               ),
-                              Text("Deposit"),
+                              Text(
+                                "Deposit",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -230,12 +256,20 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
-                                MdiIcons.creditCardOutline,
-                                color: Colors.cyan,
-                                size: 60,
+                              GestureDetector(
+                                child: Icon(
+                                  MdiIcons.creditCardOutline,
+                                  color: Colors.cyan,
+                                  size: 60,
+                                ),
+                                onTap: () {
+                                  print("pembayaran");
+                                },
                               ),
-                              Text("Pembayaran"),
+                              Text(
+                                "Pembayaran",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -255,16 +289,19 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  print("object");
-                                },
                                 child: Icon(
                                   MdiIcons.handCoinOutline,
                                   color: Colors.cyan,
                                   size: 60,
                                 ),
+                                onTap: () {
+                                  print("pinjaman");
+                                },
                               ),
-                              Text("Pinjaman"),
+                              Text(
+                                "Pinjaman",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -285,7 +322,7 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  print("object");
+                                  print("mutasi");
                                 },
                                 child: Icon(
                                   MdiIcons.creditCardRefundOutline,
@@ -293,7 +330,10 @@ class HomeScreen extends StatelessWidget {
                                   size: 60,
                                 ),
                               ),
-                              Text("Mutasi"),
+                              Text(
+                                "Mutasi",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -312,6 +352,7 @@ class HomeScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             color: Colors.cyan.shade50,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),

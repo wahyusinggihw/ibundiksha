@@ -49,47 +49,62 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Username',
-                          // hintText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text("Username"),
+                      ),
+                      Container(
+                        height: 50,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            // labelText: 'Username',
+                            // hintText: 'Password',
+                            border: OutlineInputBorder(),
                           ),
                         ),
                       ),
                       const SizedBox(height: 10),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          // hintText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text("Password"),
+                      ),
+                      Container(
+                        height: 50,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            // labelText: 'Username',
+                            // hintText: 'Password',
+                            border: OutlineInputBorder(),
                           ),
                         ),
                       ),
                       const SizedBox(height: 10),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.cyan,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.cyan,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        child: Container(
-                            width: width * 0.2,
+                          child: const SizedBox(
+                            width: 100,
                             child: Text(
                               'Login',
                               textAlign: TextAlign.center,
-                            )),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/main');
+                          },
+                        ),
                       ),
-                      const SizedBox(height: 10),
+                      // const SizedBox(height: 10),
                       Row(
                         children: [
                           TextButton(
@@ -99,7 +114,6 @@ class LoginScreen extends StatelessWidget {
                             child: Text('Daftar Mbanking'),
                           ),
                           Spacer(),
-                          SizedBox(),
                           TextButton(
                             onPressed: () {
                               // Navigator.pushNamed(context, '/register');
@@ -114,10 +128,12 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
-          about(context, "Copyright" + '©' + "2022 By Undiksha"),
+          // Spacer(),
+          // about(context, "Copyright" + '©' + "2022 By Undiksha"),
         ],
       ),
+      bottomNavigationBar:
+          about(context, "Copyright" + '©' + "2022 By Undiksha"),
     );
   }
 }
