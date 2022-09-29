@@ -1,16 +1,21 @@
 # ibundiksha
 
-A new Flutter project.
+Aplikasi Internet Banking Undiksha
 
-## Getting Started
+# Overview
+Tampilan dari aplikasi
+- Splash screen
+<img src="https://user-images.githubusercontent.com/63113423/193096459-2eabf382-2768-450e-b160-d503a86977cf.png" width="250"/>
 
-This project is a starting point for a Flutter application.
+- Login screen
+<img src="https://user-images.githubusercontent.com/63113423/193096692-b1469fab-1a03-4120-91c4-ef47f9a010ee.png" width="250"/>
 
-A few resources to get you started if this is your first Flutter project:
+- Auth validation
+  - Form
+  <img src="https://user-images.githubusercontent.com/63113423/193096832-70de7aec-7ffa-471d-9db4-f8650fbcc33c.png" width="250"/>
+  
+  - Auth service
+  <img src="https://user-images.githubusercontent.com/63113423/193096932-02d46c1e-881a-48e9-b75d-2c1e02c06eb6.png" width="250"/>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Home screen
+<img src="https://user-images.githubusercontent.com/63113423/193097033-6458839e-6b00-4709-be82-49f5eb67b31e.png" width="250"/>
