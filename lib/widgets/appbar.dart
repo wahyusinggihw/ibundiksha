@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/widgets/menu_home.dart';
 
-Widget appBar(BuildContext context, String title) {
+// String activeScreen = MenuHome.active;
+Widget myAppBar(
+    {required BuildContext context,
+    String? activeScreen,
+    List<Widget>? actions}) {
   return AppBar(
-    title: Text(title),
+    backgroundColor: Colors.cyan,
     centerTitle: true,
-    elevation: 0,
-    backgroundColor: Colors.transparent,
+    // automaticallyImplyLeading: false,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
-        // Navigator.pop(context);
+        Navigator.pop(context);
       },
     ),
+    actions: actions,
+    title: Text(activeScreen!),
   );
 }

@@ -4,6 +4,8 @@ import '../screens/splash.dart';
 import 'route_list.dart';
 import 'package:ibundiksha/screens/login.dart';
 import 'package:ibundiksha/screens/home.dart';
+import 'package:ibundiksha/screens/transaksi.dart';
+import 'package:ibundiksha/screens/no_route.dart';
 
 class RouterGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,14 +18,11 @@ class RouterGenerator {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case routeHomeScreen:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case routeTransaksiScreen:
+        return MaterialPageRoute(builder: (_) => TransaksiScreen());
+
       default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No route defined for ${settings.name}'),
-            ),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => NoRouteScreen());
     }
   }
 }

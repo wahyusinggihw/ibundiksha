@@ -1,9 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/router/route_list.dart';
 
 class MenuHome {
   Color mainColor = Colors.cyan;
   Color subColor = Colors.cyan.shade100;
   Color strongColor = Colors.blue;
+
+  static String active = "";
 
   static Widget mainContainer(
     BuildContext context, {
@@ -31,7 +35,7 @@ class MenuHome {
   }
 
   Widget menuGrid(
-      BuildContext context, String title, IconData icon, String route) {
+      BuildContext context, String title, IconData icon, String routeScreen) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -52,7 +56,10 @@ class MenuHome {
                   size: 60,
                 ),
                 onTap: () {
-                  print(route);
+                  Navigator.pushNamed(context, routeScreen);
+                  active = title;
+                  print("aktif sekarang " + active);
+                  print(routeScreen);
                 },
               ),
               Text(
