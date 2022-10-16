@@ -36,6 +36,30 @@ class MenuHome {
     );
   }
 
+  static Widget mainWideContainer({
+    double? width,
+    double? height,
+    Widget? child,
+  }) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade400),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 6,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
   Widget menuGrid(
       BuildContext context, String title, IconData icon, String routeScreen) {
     return Padding(
