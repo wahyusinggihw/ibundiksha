@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: "Koperasi Undiksha",
-      initialRoute: routeLoginScreen,
+      initialRoute: routeHomeScreen,
       onGenerateRoute: RouterGenerator.generateRoute,
     );
   }

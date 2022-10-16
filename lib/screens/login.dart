@@ -16,18 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.height;
-    var mainContainer = MenuHome.mainContainer;
-    var loginService = Auth().loginService;
-    var snackBarCustom = Dialogs().snackBarCustom;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Koperasi Undiksha'),
@@ -47,8 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }),
         ),
       ),
-      bottomNavigationBar:
-          about(context, "Copyright" + '©' + "2022 By Undiksha"),
+      bottomNavigationBar: about(context, "Copyright © 2022 By Undiksha"),
     );
   }
 }

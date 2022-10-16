@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     var menuGrid = MenuHome().menuGrid;
     var bioBox = MenuHome.bioBox;
     var mainContainer = MenuHome.mainContainer;
+    var mainWideContainer = MenuHome.mainWideContainer;
 
     return Scaffold(
       appBar: AppBar(
@@ -22,6 +23,18 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.cyan,
         actions: [
+          ResponsiveVisibility(
+            visible: false,
+            visibleWhen: [Condition.largerThan(name: MOBILE)],
+            child: TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                textStyle: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onPressed: () {},
+              child: Text("Logout"),
+            ),
+          ),
           IconButton(
             splashRadius: 20,
             icon: const Icon(Icons.logout),
@@ -33,17 +46,14 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             const SizedBox(
               height: 10,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: mainContainer(
-                context,
-                // width: MediaQuery.of(context).size.width - 20,
-                // height: MediaQuery.of(context).size.height * 0.2,
+              child: mainWideContainer(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ResponsiveRowColumn(

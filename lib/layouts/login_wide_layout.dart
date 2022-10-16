@@ -5,7 +5,7 @@ import 'package:ibundiksha/services/login_services.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 
 class LoginWideLayout extends StatefulWidget {
-  const LoginWideLayout({Key? key, formKey}) : super(key: key);
+  const LoginWideLayout({Key? key}) : super(key: key);
 
   @override
   State<LoginWideLayout> createState() => _LoginWideLayoutState();
