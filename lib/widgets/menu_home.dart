@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
@@ -73,9 +75,9 @@ class MenuHome {
     );
   }
 
-  static Widget bioBox(BuildContext context, String title, String subtitle) {
+  static Widget bioBox(String title, String subtitle) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.6,
+      // width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.cyan.shade50,
         borderRadius: BorderRadius.circular(10),

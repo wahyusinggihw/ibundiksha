@@ -3,6 +3,7 @@ import 'package:ibundiksha/widgets/appbar.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,72 +38,83 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            mainContainer(
-              context,
-              width: MediaQuery.of(context).size.width - 20,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/user.jpg'),
-                          fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: mainContainer(
+                context,
+                // width: MediaQuery.of(context).size.width - 20,
+                // height: MediaQuery.of(context).size.height * 0.2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ResponsiveRowColumn(
+                    layout: ResponsiveWrapper.of(context).isSmallerThan(TABLET)
+                        ? ResponsiveRowColumnType.ROW
+                        : ResponsiveRowColumnType.COLUMN,
+                    children: [
+                      ResponsiveRowColumnItem(
+                        child: Container(
+                          margin: const EdgeInsets.all(8),
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/user.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        bioBox(context, 'Nama', 'Wahyu Singgih Wicaksono'),
-                        const SizedBox(
-                          height: 5,
+                      ResponsiveRowColumnItem(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            bioBox('Nama', 'Wahyu Singgih Wicaksono'),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            bioBox('Saldo', 'Rp. 100.000'),
+                          ],
                         ),
-                        bioBox(context, 'Saldo', 'Rp. 100.000'),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            mainContainer(
-              context,
-              width: MediaQuery.of(context).size.width - 20,
-              child: Table(
-                children: [
-                  TableRow(
-                    children: [
-                      menuGrid(context, 'Saldo', MdiIcons.wallet, '/saldo'),
-                      menuGrid(context, 'Transfer', MdiIcons.bankTransferOut,
-                          '/transaksi'),
-                      menuGrid(
-                          context, 'Deposit', MdiIcons.cashPlus, '/deposit'),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      menuGrid(context, 'Pembayaran',
-                          MdiIcons.creditCardOutline, '/pembayaran'),
-                      menuGrid(context, 'Pinjaman', MdiIcons.handCoinOutline,
-                          '/pinjaman'),
-                      menuGrid(context, 'Mutasi',
-                          MdiIcons.creditCardRefundOutline, '/mutasi'),
-                    ],
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: mainContainer(
+                context,
+                // width: MediaQuery.of(context).size.width - 20,
+                child: Table(
+                  children: [
+                    TableRow(
+                      children: [
+                        menuGrid(context, 'Saldo', MdiIcons.wallet, '/saldo'),
+                        menuGrid(context, 'Transfer', MdiIcons.bankTransferOut,
+                            '/transaksi'),
+                        menuGrid(
+                            context, 'Deposit', MdiIcons.cashPlus, '/deposit'),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        menuGrid(context, 'Pembayaran',
+                            MdiIcons.creditCardOutline, '/pembayaran'),
+                        menuGrid(context, 'Pinjaman', MdiIcons.handCoinOutline,
+                            '/pinjaman'),
+                        menuGrid(context, 'Mutasi',
+                            MdiIcons.creditCardRefundOutline, '/mutasi'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
