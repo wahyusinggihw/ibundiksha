@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ibundiksha/router/route_list.dart';
 
 class Menus {
@@ -18,32 +19,32 @@ final List<Menus> menus = _menus
 final List<Map<String, Object>> _menus = [
   {
     'title': 'Saldo',
-    'icon': CupertinoIcons.home,
+    'icon': MdiIcons.wallet,
     'routeScreen': '/saldo',
   },
   {
     'title': 'Transfer',
-    'icon': CupertinoIcons.person,
+    'icon': MdiIcons.bankTransferOut,
     'routeScreen': routeTransaksiScreen,
   },
   {
     'title': 'Deposit',
-    'icon': CupertinoIcons.money_dollar,
+    'icon': MdiIcons.cashPlus,
     'routeScreen': '/deposit',
   },
   {
     'title': 'Pembayaran',
-    'icon': CupertinoIcons.money_dollar_circle,
+    'icon': MdiIcons.creditCardOutline,
     'routeScreen': '/pembayaran',
   },
   {
-    'title': 'Angsuran',
-    'icon': CupertinoIcons.money_dollar_circle,
+    'title': 'Pinjaman',
+    'icon': MdiIcons.handCoinOutline,
     'routeScreen': '/pinjaman',
   },
   {
-    'title': 'Pengaturan',
-    'icon': CupertinoIcons.settings,
+    'title': 'Mutasi',
+    'icon': MdiIcons.creditCardRefundOutline,
     'routeScreen': '/mutasi',
   },
 ];

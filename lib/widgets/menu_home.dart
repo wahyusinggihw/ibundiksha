@@ -1,8 +1,5 @@
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/router/route_list.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class MenuHome {
   Color mainColor = Colors.cyan;
@@ -69,31 +66,38 @@ class MenuHome {
           color: Colors.cyan.shade50,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                child: Icon(
+        child: InkWell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
                   icon,
                   color: strongColor,
-                  size: 60,
+                  size: ResponsiveValue(context,
+                      defaultValue: 60.0,
+                      valueWhen: const [
+                        Condition.smallerThan(name: MOBILE, value: 45.0),
+                        Condition.smallerThan(name: TABLET, value: 40.0),
+                        Condition.largerThan(name: TABLET, value: 80.0),
+                      ]).value,
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, routeScreen);
-                  active = title;
-                  print("aktif sekarang " + active);
-                  print(routeScreen);
-                },
-              ),
-              Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
+                Text(
+                  title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 12),
+                ),
+              ],
+            ),
           ),
+          onTap: () {
+            Navigator.pushNamed(context, routeScreen);
+            active = title;
+            print("aktif sekarang " + active);
+            print(routeScreen);
+          },
         ),
       ),
     );
@@ -101,7 +105,6 @@ class MenuHome {
 
   static Widget bioBox(String title, String subtitle) {
     return Container(
-      // width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.cyan.shade50,
         borderRadius: BorderRadius.circular(10),
@@ -126,5 +129,43 @@ class MenuHome {
   }
 
   // list widget
+}
 
+class Contact extends StatelessWidget {
+  const Contact({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // height: MediaQuery.of(context).size.height * 0.2,
+      width: MediaQuery.of(context).size.width,
+      color: Colors.cyan.shade50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "Butuh Bantuan?",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text("0812-3456-7890",
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.phone,
+            size: 80,
+            color: Colors.cyan,
+          )
+        ],
+      ),
+    );
+  }
 }
