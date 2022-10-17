@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/widgets/appbar.dart';
+import 'package:ibundiksha/widgets/list_menu.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
@@ -97,35 +98,23 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: mainContainer(
-                context,
-                // width: MediaQuery.of(context).size.width - 20,
-                child: Table(
-                  children: [
-                    TableRow(
-                      children: [
-                        menuGrid(context, 'Saldo', MdiIcons.wallet, '/saldo'),
-                        menuGrid(context, 'Transfer', MdiIcons.bankTransferOut,
-                            '/transaksi'),
-                        menuGrid(
-                            context, 'Deposit', MdiIcons.cashPlus, '/deposit'),
-                      ],
-                    ),
-                    TableRow(
-                      children: [
-                        menuGrid(context, 'Pembayaran',
-                            MdiIcons.creditCardOutline, '/pembayaran'),
-                        menuGrid(context, 'Pinjaman', MdiIcons.handCoinOutline,
-                            '/pinjaman'),
-                        menuGrid(context, 'Mutasi',
-                            MdiIcons.creditCardRefundOutline, '/mutasi'),
-                      ],
-                    ),
-                  ],
-                ),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: menus.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1.5,
               ),
+              itemBuilder: (context, index) {
+                Menus menu = menus[index];
+                return menuGrid(
+                  context,
+                  menu.title,
+                  menu.icon,
+                  menu.routeScreen,
+                );
+              },
             ),
             const SizedBox(
               height: 20,
