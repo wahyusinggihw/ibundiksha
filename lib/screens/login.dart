@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/services/login_services.dart';
 import 'package:ibundiksha/widgets/about.dart';
@@ -30,9 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: LayoutBuilder(
           builder: ((context, constraints) {
             if (constraints.maxWidth > 450) {
-              return LoginWideLayout();
+              return const LoginWideLayout();
             } else {
-              return LoginNarrowLayout();
+              return const LoginNarrowLayout();
             }
           }),
         ),
