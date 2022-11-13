@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/screens/login_api.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
 import '../screens/splash.dart';
 import 'route_list.dart';
@@ -20,6 +21,8 @@ class RouterGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case routeTransaksiScreen:
         return MaterialPageRoute(builder: (_) => TransaksiScreen());
+      case routeLoginAPI:
+        return MaterialPageRoute(builder: (_) => LoginApi());
 
       default:
         return MaterialPageRoute(builder: (_) => NoRouteScreen());
