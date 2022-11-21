@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 import '../widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/login_services.dart';
@@ -17,6 +18,7 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final Auth _service = Auth();
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +112,17 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                               ),
                             ),
                             onPressed: () async {
+                              // postLogin(_usernameController.text,
+                              //     _passwordController.text);
                               if (_formKey.currentState!.validate()) {
-                                var message = await loginService(
+                                var message = await _service.postLogin(
                                     _usernameController.text,
                                     _passwordController.text);
                                 if (message!.contains("Success")) {
+                                  await SharedPrefs.setUsername(
+                                      _usernameController.text);
+                                  await SharedPrefs.setNIM(
+                                      _passwordController.text);
                                   var loginSuccess = SnackBar(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)),
@@ -161,7 +169,6 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                                       .showSnackBar(loginFailed);
                                 }
                               }
-                              // Navigator.pushNamed(context, '/main');
                             },
                           ),
                         ),

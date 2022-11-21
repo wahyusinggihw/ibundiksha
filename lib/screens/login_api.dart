@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ibundiksha/router/route_list.dart';
+import 'package:ibundiksha/screens/home.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 
 class LoginApi extends StatefulWidget {
@@ -47,10 +49,17 @@ class _LoginApiState extends State<LoginApi> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  print(usernameController.text);
-                  print(passwordController.text);
-                  postLogin(usernameController.text, passwordController.text);
+                onPressed: () async {
+                  // ListUsersService _service = ListUsersService();
+                  // var status = await _service.postLogin(
+                  //     usernameController.text, passwordController.text);
+                  // if (status!.contains('Success')) {
+                  //   print("success");
+                  //   Navigator.pushNamedAndRemoveUntil(
+                  //       context, routeHomeScreen, (route) => false);
+                  // } else {
+                  //   print('salah');
+                  // }
                 },
                 child: const Text("Login"),
               )
@@ -62,7 +71,8 @@ class _LoginApiState extends State<LoginApi> {
   }
 }
 
-postLogin(String username, String password) async {
-  ListUsersService _service = ListUsersService();
-  await _service.postLogin(username, password);
-}
+// postLogin(String username, String password) async {
+//   ListUsersService _service = ListUsersService();
+//   await _service.postLogin(username, password);
+//   return 'Success';
+// }

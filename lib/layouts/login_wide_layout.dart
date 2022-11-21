@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 import '../widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/login_services.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 
 class LoginWideLayout extends StatefulWidget {
   const LoginWideLayout({Key? key}) : super(key: key);
@@ -15,6 +17,8 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  SharedPrefs sharedPrefs = SharedPrefs();
+  final Auth _service = Auth();
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +114,14 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                var message = await loginService(
+                                var message = await _service.postLogin(
                                     _usernameController.text,
                                     _passwordController.text);
                                 if (message!.contains("Success")) {
+                                  await SharedPrefs.setUsername(
+                                      _usernameController.text);
+                                  await SharedPrefs.setNIM(
+                                      _passwordController.text);
                                   var loginSuccess = SnackBar(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)),
@@ -133,10 +141,10 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                                         left: 20),
                                   );
                                   print("success");
-                                  // ScaffoldMessenger.of(context)
-                                  //     .showSnackBar(loginSuccess);
-                                  // Navigator.pushNamedAndRemoveUntil(
-                                  //     context, '/main', (route) => false);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(loginSuccess);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, '/main', (route) => false);
                                 } else {
                                   var loginFailed = SnackBar(
                                     shape: RoundedRectangleBorder(

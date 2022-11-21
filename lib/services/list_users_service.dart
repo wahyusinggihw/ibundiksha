@@ -29,29 +29,4 @@ class ListUsersService {
       throw Exception(error.response);
     }
   }
-
-  postLogin(String username, String password) async {
-    String url = "https://reqres.in/api/users";
-    final Response response;
-    FormData formData = FormData.fromMap(
-      {
-        "name": username,
-        "job": password,
-      },
-    );
-    try {
-      // di reqres tidak memakai header dan token jadi di komen dulu
-      // dio.options.headers['Authentication'] = 'Bearer $token'
-      // dio.options.headers['Content-Type'] = 'application/json'
-
-      response = await dio.post(
-        url,
-        data: formData,
-      );
-      print(response.data);
-    } on DioError catch (error, stacktrace) {
-      print('Exception occured: $error stackTrace: $stacktrace');
-      throw Exception(error.response);
-    }
-  }
 }

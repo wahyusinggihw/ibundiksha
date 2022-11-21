@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/router/route_generator.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefs.init();
   runApp(const MyApp());
 }
 
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: "Koperasi Undiksha",
-      initialRoute: routeLoginAPI,
+      initialRoute: routeLoginScreen,
       onGenerateRoute: RouterGenerator.generateRoute,
     );
   }
