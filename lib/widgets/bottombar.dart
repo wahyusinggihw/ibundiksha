@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/screens/home.dart';
 import 'package:ibundiksha/screens/profile.dart';
+import 'package:ibundiksha/screens/qrscanner.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _BottomBarState extends State<BottomBar> {
   int pageIndex = 0;
   final List<Widget> listPage = [
     const HomeScreen(),
-    const HomeScreen(),
+    const QrScanner(),
     const ProfileScreen(),
   ];
 

@@ -11,24 +11,27 @@ class Auth {
   }
 
   postLogin(String username, String password) async {
-    String url = "https://reqres.in/api/users";
+    String url = "https://reqres.in/api/login";
     final Response response;
 
-    FormData formData = FormData.fromMap(
-      {
-        "name": username,
-        "job": password,
-      },
-    );
+    // FormData formData = FormData.fromMap(
+    //   {
+    //     "email": username,
+    //     "password": password,
+    //   },
+    // );
     try {
       // di reqres tidak memakai header dan token jadi di komen dulu
       // dio.options.headers['Authentication'] = 'Bearer $token'
       // dio.options.headers['Content-Type'] = 'application/json'
       response = await dio.post(
         url,
-        data: formData,
+        data: {
+          "email": username,
+          "password": password,
+        },
       );
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return 'Success';
       } else if (response.statusCode == 400) {
         return 'Failed';

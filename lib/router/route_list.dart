@@ -3,7 +3,7 @@ const String routeSplashScreen = '/splash';
 const String routeMainScreen = '/main';
 const String routeLoginScreen = '/login';
 const String routeHomeScreen = '/home';
+const String routeQRScanner = '/scanner';
 const String routeTransaksiScreen = '/transaksi';
 const String routeProfileScreen = '/profile';
-
 const String routeLoginAPI = '/loginapi';

@@ -35,40 +35,47 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
     // String activeScreen = MenuHome.active;
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.cyan,
-          centerTitle: true,
-          // automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text("Transaksi"),
+      appBar: AppBar(
+        backgroundColor: Colors.cyan,
+        centerTitle: true,
+        // automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _listUser.length,
-                    itemBuilder: (context, index) {
-                      ListUsersModel data = _listUser[index];
-                      return ListTile(
-                        title: Text("${data.firstName!} ${data.lastName!}"),
-                        subtitle: Text(data.email!),
-                        leading: Image.network(data.avatar!),
-                        onTap: () => print(data.firstName),
-                      );
-                    },
-                  ),
+        title: Text("Transaksi"),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _listUser.length,
+                  itemBuilder: (context, index) {
+                    ListUsersModel data = _listUser[index];
+                    return ListTile(
+                      title: Text("${data.firstName!} ${data.lastName!}"),
+                      subtitle: Text(data.email!),
+                      leading: Image.network(data.avatar!),
+                      onTap: () => print(data.firstName),
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
 
