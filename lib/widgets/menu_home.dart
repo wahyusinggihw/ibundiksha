@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -103,8 +105,9 @@ class MenuHome {
     );
   }
 
-  static Widget bioBox(String title, String subtitle) {
+  static Widget bioBox(BuildContext context, String title, String subtitle) {
     return Container(
+      width: MediaQuery.of(context).size.width - 150,
       decoration: BoxDecoration(
         color: Colors.cyan.shade50,
         borderRadius: BorderRadius.circular(10),

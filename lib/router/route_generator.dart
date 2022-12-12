@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/screens/login_api.dart';
-import 'package:ibundiksha/screens/profile.dart';
-import 'package:ibundiksha/screens/qrscanner.dart';
+import 'package:ibundiksha/screens/profile_screen.dart';
+import 'package:ibundiksha/screens/qrscanner_screen.dart';
+import 'package:ibundiksha/screens/register_screen.dart';
+import 'package:ibundiksha/screens/saldo_screen.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
-import '../screens/splash.dart';
+import '../screens/splash_screen.dart';
 import 'route_list.dart';
-import 'package:ibundiksha/screens/login.dart';
-import 'package:ibundiksha/screens/home.dart';
-import 'package:ibundiksha/screens/transaksi.dart';
+import 'package:ibundiksha/screens/login_screen.dart';
+import 'package:ibundiksha/screens/home_screen.dart';
+import 'package:ibundiksha/screens/transaksi_screen.dart';
 import 'package:ibundiksha/screens/no_route.dart';
 
 class RouterGenerator {
@@ -19,6 +21,8 @@ class RouterGenerator {
         return MaterialPageRoute(builder: (_) => BottomBar());
       case routeLoginScreen:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case routeRegisterScreen:
+        return MaterialPageRoute(builder: (_) => RegisterScreen());
       case routeHomeScreen:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case routeTransaksiScreen:
@@ -27,6 +31,8 @@ class RouterGenerator {
         return MaterialPageRoute(builder: (_) => ProfileScreen());
       case routeQRScanner:
         return MaterialPageRoute(builder: (_) => QrScanner());
+      case routeSaldoScreen:
+        return MaterialPageRoute(builder: (_) => SaldoScreen());
 
       case routeLoginAPI:
         return MaterialPageRoute(builder: (_) => LoginApi());

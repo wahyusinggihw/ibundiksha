@@ -14,15 +14,17 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   SharedPrefs sharedPrefs = SharedPrefs();
+  String nama = '';
   String username = '';
-  String nim = '';
+  String saldo = '';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    username = SharedPrefs.getUsername('username');
-    nim = SharedPrefs.getNIM('nim');
+    nama = sharedPrefs.getString('nama');
+    username = sharedPrefs.getString('username');
+    saldo = sharedPrefs.getString('saldo');
   }
 
   @override
@@ -86,14 +88,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'NIM : ',
+                  'Saldo : ',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  nim,
+                  saldo,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Username : ',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  username,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -115,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 Text(
-                  username,
+                  nama,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

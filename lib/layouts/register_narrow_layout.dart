@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-
+import 'package:ibundiksha/router/route_list.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 import '../widgets/menu_home.dart';
-
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/auth_services.dart';
-
+import 'package:ibundiksha/widgets/about.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 
-class LoginNarrowLayout extends StatefulWidget {
-  const LoginNarrowLayout({Key? key}) : super(key: key);
+class RegisterNarrowLayout extends StatefulWidget {
+  const RegisterNarrowLayout({Key? key}) : super(key: key);
 
   @override
-  State<LoginNarrowLayout> createState() => _LoginNarrowLayoutState();
+  State<RegisterNarrowLayout> createState() => _RegisterNarrowLayoutState();
 }
 
-class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
+class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _auth = Auth();
+  final TextEditingController _namaController = TextEditingController();
+  final Auth _auth = Auth();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
     var width = MediaQuery.of(context).size.height;
     var mainContainer = MenuHome.mainContainer;
     var snackBarCustom = Dialogs().snackBarCustom;
+    SharedPrefs sharedPrefs = SharedPrefs();
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -57,10 +60,30 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text("Username"),
+                          child: Text("Nama lengkap"),
                         ),
                         Container(
                           // height: 50,
+                          child: TextFormField(
+                            controller: _namaController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Nama cant empty";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text("Username"),
+                        ),
+                        Container(
+                          // height: 60,
                           child: TextFormField(
                             controller: _usernameController,
                             decoration: InputDecoration(
@@ -116,15 +139,11 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                               // _service.postLogin(_usernameController.text,
                               //     _passwordController.text);
                               if (_formKey.currentState!.validate()) {
-                                print(_usernameController.text);
-                                print(_passwordController.text);
-                                var status = await _auth.loginService(
+                                var message = await _auth.registerService(
+                                    nama: _namaController.text,
                                     username: _usernameController.text,
                                     password: _passwordController.text);
-                                // await _auth.loginService(
-                                //     _usernameController.text,
-                                //     _passwordController.text);
-                                if (status!.isLoggedIn == true) {
+                                if (message!.contains("Success")) {
                                   var loginSuccess = SnackBar(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)),
@@ -179,17 +198,18 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/register');
+                                Navigator.popAndPushNamed(
+                                    context, routeLoginScreen);
                               },
-                              child: Text('Daftar Mbanking'),
+                              child: Text('Login Mbanking'),
                             ),
-                            Spacer(),
-                            TextButton(
-                              onPressed: () {
-                                // Navigator.pushNamed(context, '/register');
-                              },
-                              child: Text('lupa password?'),
-                            ),
+                            // Spacer(),
+                            // TextButton(
+                            //   onPressed: () {
+                            //     // Navigator.pushNamed(context, '/register');
+                            //   },
+                            //   child: Text('lupa password?'),
+                            // ),
                           ],
                         ),
                       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/screens/home.dart';
-import 'package:ibundiksha/screens/profile.dart';
-import 'package:ibundiksha/screens/qrscanner.dart';
+import 'package:ibundiksha/screens/home_screen.dart';
+import 'package:ibundiksha/screens/profile_screen.dart';
+import 'package:ibundiksha/screens/qrscanner_screen.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);

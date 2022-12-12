@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import '../widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -6,17 +7,18 @@ import 'package:ibundiksha/services/auth_services.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 
-class LoginWideLayout extends StatefulWidget {
-  const LoginWideLayout({Key? key}) : super(key: key);
+class RegisterWideLayout extends StatefulWidget {
+  const RegisterWideLayout({Key? key}) : super(key: key);
 
   @override
-  State<LoginWideLayout> createState() => _LoginWideLayoutState();
+  State<RegisterWideLayout> createState() => _RegisterWideLayoutState();
 }
 
-class _LoginWideLayoutState extends State<LoginWideLayout> {
+class _RegisterWideLayoutState extends State<RegisterWideLayout> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
   SharedPrefs sharedPrefs = SharedPrefs();
   final Auth _auth = Auth();
 
@@ -71,6 +73,26 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Username cant empty";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text("Password"),
+                        ),
+                        Container(
+                          // height: 60,
+                          child: TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Password cant empty";
                               }
                               return null;
                             },
@@ -198,7 +220,8 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                             Spacer(),
                             TextButton(
                               onPressed: () {
-                                // Navigator.pushNamed(context, '/register');
+                                Navigator.pushNamed(
+                                    context, routeRegisterScreen);
                               },
                               child: Text('lupa password?'),
                             ),

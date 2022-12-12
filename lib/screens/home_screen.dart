@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/models/current_user_model.dart';
 import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/widgets/list_menu.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/services/auth_services.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  SharedPrefs sharedPrefs = SharedPrefs();
+  String username = '';
+  String saldo = '';
+  final _auth = Auth();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    username = sharedPrefs.getString('username');
+    saldo = sharedPrefs.getString('saldo');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +61,16 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             splashRadius: 20,
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              Dialogs().showAlertDialog(
-                  context, 'Logout', 'Anda yakin ingin logout?', '/login');
+            onPressed: () async {
+              var status = await _auth.logoutService();
+
+              print(status.isLoggedIn);
+              if (status.isLoggedIn == false) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, routeLoginScreen, (route) => false);
+              }
+              // Dialogs().showAlertDialog(
+              //     context, 'Logout', 'Anda yakin ingin logout?', '/login');
             },
           ),
         ],
@@ -89,11 +117,11 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    bioBox('Nama', 'Wahyu Singgih Wicaksono'),
+                                    bioBox(context, 'Nama', username),
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    bioBox('Saldo', 'Rp. 100.000'),
+                                    bioBox(context, 'Saldo', saldo),
                                   ],
                                 ),
                               ),
@@ -135,11 +163,11 @@ class HomeScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  bioBox('Nama', 'Wahyu Singgih Wicaksono'),
+                                  bioBox(context, 'Nama', username),
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  bioBox('Saldo', 'Rp. 100.000'),
+                                  bioBox(context, 'Saldo', saldo),
                                 ],
                               ),
                             ),
