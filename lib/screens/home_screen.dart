@@ -63,9 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               var status = await _auth.logoutService();
-
-              print(status.isLoggedIn);
               if (status.isLoggedIn == false) {
+                print('User logged out');
                 Navigator.pushNamedAndRemoveUntil(
                     context, routeLoginScreen, (route) => false);
               }

@@ -129,7 +129,7 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
                             child: const SizedBox(
                               width: 100,
                               child: Text(
-                                'Login',
+                                'Register',
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -139,11 +139,11 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
                               // _service.postLogin(_usernameController.text,
                               //     _passwordController.text);
                               if (_formKey.currentState!.validate()) {
-                                var message = await _auth.registerService(
+                                var status = await _auth.registerService(
                                     nama: _namaController.text,
                                     username: _usernameController.text,
                                     password: _passwordController.text);
-                                if (message!.contains("Success")) {
+                                if (status!.isLoggedIn == true) {
                                   var loginSuccess = SnackBar(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)),
@@ -153,7 +153,7 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
                                     backgroundColor: Colors.blue,
                                     duration: Duration(seconds: 2),
                                     content: Text(
-                                      "Signed in as ${_usernameController.text}",
+                                      "Register Success\nSigned in as ${_usernameController.text}",
                                     ),
                                     margin: EdgeInsets.only(
                                         bottom:
@@ -177,7 +177,7 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
                                     backgroundColor: Colors.red,
                                     duration: Duration(seconds: 2),
                                     content: Text(
-                                      "Login failed",
+                                      "Register failed",
                                     ),
                                     margin: EdgeInsets.only(
                                         bottom:

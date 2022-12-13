@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/router/route_list.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 
 import '../widgets/menu_home.dart';
 
@@ -143,11 +145,11 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                                         right: 20,
                                         left: 20),
                                   );
-                                  print("success");
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(loginSuccess);
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/main', (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      routeMainScreen, (route) => false);
+                                  print('User logged in');
                                 } else {
                                   var loginFailed = SnackBar(
                                     shape: RoundedRectangleBorder(
@@ -169,6 +171,7 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                                   );
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(loginFailed);
+                                  print('Login error');
                                 }
                               }
                             },

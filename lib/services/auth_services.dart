@@ -37,11 +37,14 @@ class Auth {
           "password": password,
         },
       );
-      if (response.statusCode == 200) {
+
+      var data = response.data;
+      if (data['status'] == 'success') {
+        // var data = response.data;
         // print(json);
-        var data = response.data;
 
         List<dynamic> dataList = (data['data'] as List).cast<dynamic>();
+        print(data['status']);
 
         double? saldo = double.parse(dataList[0]['saldo']);
         int? userId = int.parse(dataList[0]['user_id']);
@@ -54,11 +57,18 @@ class Auth {
           password: dataList[0]['password'],
           saldo: saldo,
         );
-        sharedPrefs.addString('nama', currentUserData.nama!);
-        sharedPrefs.addString('username', currentUserData.username!);
-        sharedPrefs.addString('saldo', currentUserData.saldo!.toString());
-        print(currentUserData.saldo);
+        SharedPrefs.addBool('isLoggedIn', true);
+        SharedPrefs.addString('userId', currentUserData.userId!.toString());
+        SharedPrefs.addString('nama', currentUserData.nama!);
+        SharedPrefs.addString('username', currentUserData.username!);
+        SharedPrefs.addString('saldo', currentUserData.saldo!.toString());
 
+        return currentUserData;
+      } else if (data['status'] == 'error') {
+        print('Login error');
+        CurrentUserModel currentUserData = CurrentUserModel(
+          isLoggedIn: false,
+        );
         return currentUserData;
       }
     } on DioError catch (error, stacktrace) {
@@ -68,26 +78,37 @@ class Auth {
     return null;
   }
 
-  registerService({required String username, nama, password}) async {
+  Future<CurrentUserModel?> registerService(
+      {required String username, nama, password}) async {
     final Response response;
 
     try {
-      response = await dio.post('$url+/register', data: {
+      var response = await dio.post('$url/register', data: {
         "username": username,
         "nama": nama,
         "password": password,
       });
 
+      var data = response.data;
+
       if (response.statusCode == 200) {
-        var data = response.data;
-        if (data['status'] == 'success') {
-          print(data['data']);
-        }
+        var loginResponse = await loginService(
+          username: username,
+          password: password,
+        );
+        return loginResponse;
+      } else {
+        print('Register error');
+        CurrentUserModel currentUserData = CurrentUserModel(
+          isLoggedIn: false,
+        );
+        return currentUserData;
       }
     } on DioError catch (error, stacktrace) {
       print('Exception occured: $error stackTrace: $stacktrace');
       throw Exception(error.response);
     }
+    return null;
   }
 
   logoutService() {

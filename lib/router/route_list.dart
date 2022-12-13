@@ -8,4 +8,6 @@ const String routeQRScanner = '/scanner';
 const String routeTransaksiScreen = '/transaksi';
 const String routeProfileScreen = '/profile';
 const String routeSaldoScreen = '/saldo';
+const String routeTransaksiDetailScreen = '/transaksidetail';
+const String routePembayaranScreen = '/pembayaran';
 const String routeLoginAPI = '/loginapi';

@@ -1,42 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
+import 'package:ibundiksha/services/transaksi_service.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
-class TransaksiScreen extends StatefulWidget {
-  const TransaksiScreen({Key? key}) : super(key: key);
+class TransaksiDetailScreen extends StatefulWidget {
+  const TransaksiDetailScreen({Key? key}) : super(key: key);
 
   @override
-  State<TransaksiScreen> createState() => _TransaksiScreenState();
+  State<TransaksiDetailScreen> createState() => _TransaksiDetailScreenState();
 }
 
-class _TransaksiScreenState extends State<TransaksiScreen> {
+class _TransaksiDetailScreenState extends State<TransaksiDetailScreen> {
   List<ListUsersModel> _listUser = [];
+  TextEditingController _saldoController = TextEditingController();
+  final _transaksi = Transaksi();
 
   //2. buat fungsi get data user
-  getUsers() async {
-    ListUsersService _service = ListUsersService();
-
-    await _service.getDataUsers().then((value) {
-      if (mounted) {
-        setState(() {
-          _listUser = value!;
-        });
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUsers();
-  }
 
   @override
   Widget build(BuildContext context) {
     // String active = "Transaksi";
     // String activeScreen = MenuHome.active;
+
+    dynamic userId = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -55,33 +42,43 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
         child: Center(
           child: Column(
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _listUser.length,
-                  itemBuilder: (context, index) {
-                    ListUsersModel data = _listUser[index];
-                    return ListTile(
-                      title: Text(data.nama!),
-                      subtitle: Text(data.username!),
-                      onTap: () {
-                        print(data.userId!);
-                        Navigator.pushNamed(context, '/transaksidetail',
-                            arguments: data.userId);
-                      },
-                    );
+              const Text("Masukkan saldo"),
+              Container(
+                // height: 60,
+                child: TextFormField(
+                  controller: _saldoController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Saldo harus diisi";
+                    }
+                    return null;
                   },
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // print(userId);
+                  _transaksi.transferService(
+                      userId: int.parse(userId),
+                      jumlahSetoran: int.parse(_saldoController.text));
+
+                  // Navigator.pushNamed(context, '/add');
+                },
+                child: const Text("Tambah"),
               ),
             ],
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, '/add');
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

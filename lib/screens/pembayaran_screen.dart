@@ -1,39 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
+import 'package:ibundiksha/services/transaksi_service.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
-class SetoranScreen extends StatefulWidget {
-  const SetoranScreen({Key? key}) : super(key: key);
+class PembayaranScreen extends StatefulWidget {
+  const PembayaranScreen({Key? key}) : super(key: key);
 
   @override
-  State<SetoranScreen> createState() => _SetoranScreenState();
+  State<PembayaranScreen> createState() => _PembayaranScreenState();
 }
 
-class _SetoranScreenState extends State<SetoranScreen> {
+class _PembayaranScreenState extends State<PembayaranScreen> {
   List<ListUsersModel> _listUser = [];
+  TextEditingController _saldoController = TextEditingController();
+  final _transaksi = Transaksi();
+  SharedPrefs sharedPrefs = SharedPrefs();
+  String userId = "";
 
   //2. buat fungsi get data user
-  getUsers() async {
-    ListUsersService _service = ListUsersService();
-    await _service.getDataUsers().then((value) {
-      setState(() {
-        _listUser = value!;
-      });
-    });
-  }
-
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    getUsers();
+    userId = sharedPrefs.getString('userId');
   }
 
   @override
   Widget build(BuildContext context) {
-    // String active = "Setoran";
-    // String activeScreen = MenuHome.active;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
@@ -45,25 +40,38 @@ class _SetoranScreenState extends State<SetoranScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Transaksi"),
+        title: Text("Tarik Saldo"),
       ),
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _listUser.length,
-                  itemBuilder: (context, index) {
-                    ListUsersModel data = _listUser[index];
-                    return ListTile(
-                      title: Text("${data.firstName!} ${data.lastName!}"),
-                      subtitle: Text(data.email!),
-                      leading: Image.network(data.avatar!),
-                      onTap: () => print(data.firstName),
-                    );
+              const Text("Masukkan saldo"),
+              Container(
+                // height: 60,
+                child: TextFormField(
+                  controller: _saldoController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Saldo harus diisi";
+                    }
+                    return null;
                   },
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // print(userId);
+                  _transaksi.tarikanService(
+                      userId: int.parse(userId),
+                      jumlahTarikan: _saldoController.text);
+
+                  // Navigator.pushNamed(context, '/add');
+                },
+                child: const Text("Tambah"),
               ),
             ],
           ),
