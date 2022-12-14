@@ -5,12 +5,13 @@ import 'package:ibundiksha/screens/login_screen.dart';
 import 'package:ibundiksha/screens/no_route.dart';
 import 'package:ibundiksha/screens/pembayaran_screen.dart';
 import 'package:ibundiksha/screens/profile_screen.dart';
-import 'package:ibundiksha/screens/qrscanner_screen.dart';
+// import 'package:ibundiksha/screens/qrscanner_screen.dart';
 import 'package:ibundiksha/screens/register_screen.dart';
 import 'package:ibundiksha/screens/saldo_screen.dart';
 import 'package:ibundiksha/screens/splash_screen.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
+import 'package:ibundiksha/screens/qrscanner_result_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/screens/transaksi_detail_screen.dart';
 import 'package:ibundiksha/screens/transaksi_screen.dart';
@@ -21,13 +22,18 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = SharedPrefs.getBool('isLoggedIn');
     return MaterialApp(
         builder: (context, widget) => ResponsiveWrapper.builder(
               ClampingScrollWrapper.builder(context, widget!),
@@ -43,7 +49,7 @@ class MyApp extends StatelessWidget {
             ),
         debugShowCheckedModeBanner: false,
         title: "Koperasi Undiksha",
-        initialRoute: isLoggedIn == true ? routeMainScreen : routeLoginScreen,
+        initialRoute: routeMainScreen,
         // onGenerateRoute: RouterGenerator.generateRoute,
         routes: {
           noRoute: (context) => NoRouteScreen(),
@@ -52,7 +58,8 @@ class MyApp extends StatelessWidget {
           routeLoginScreen: (context) => LoginScreen(),
           routeRegisterScreen: (context) => RegisterScreen(),
           routeHomeScreen: (context) => HomeScreen(),
-          routeQRScanner: (context) => QrScanner(),
+          // routeQRScanner: (context) => QrScanner(),
+          routeQrScannerResult: (context) => QrScannerResult(),
           routeProfileScreen: (context) => ProfileScreen(),
           routeSaldoScreen: (context) => SaldoScreen(),
           routeTransaksiScreen: (context) => TransaksiScreen(),

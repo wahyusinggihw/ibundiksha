@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   SharedPrefs sharedPrefs = SharedPrefs();
-  String username = '';
+  String nama = '';
   String saldo = '';
   final _auth = Auth();
 
@@ -25,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    username = sharedPrefs.getString('username');
+
+    nama = sharedPrefs.getString('nama');
     saldo = sharedPrefs.getString('saldo');
   }
 
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    bioBox(context, 'Nama', username),
+                                    bioBox(context, 'Nama', nama),
                                     const SizedBox(
                                       height: 5,
                                     ),
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  bioBox(context, 'Nama', username),
+                                  bioBox(context, 'Nama', nama),
                                   const SizedBox(
                                     height: 5,
                                   ),

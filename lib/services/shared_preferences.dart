@@ -17,14 +17,6 @@ class SharedPrefs {
     await _sharedPrefs!.setString(key, value);
   }
 
-  static addBool(String key, value) async {
-    await _sharedPrefs!.setBool(key, value);
-  }
-
-  static getBool(String key) {
-    return _sharedPrefs!.getBool(key)!;
-  }
-
   clearString() async {
     await _sharedPrefs!.clear();
   }

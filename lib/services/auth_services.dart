@@ -57,7 +57,7 @@ class Auth {
           password: dataList[0]['password'],
           saldo: saldo,
         );
-        SharedPrefs.addBool('isLoggedIn', true);
+
         SharedPrefs.addString('userId', currentUserData.userId!.toString());
         SharedPrefs.addString('nama', currentUserData.nama!);
         SharedPrefs.addString('username', currentUserData.username!);

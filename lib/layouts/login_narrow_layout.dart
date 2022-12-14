@@ -21,6 +21,7 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _auth = Auth();
+  SharedPrefs sharedPrefs = SharedPrefs();
 
   @override
   Widget build(BuildContext context) {
