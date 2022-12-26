@@ -5,6 +5,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/auth_services.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/router/route_list.dart';
 
 class LoginWideLayout extends StatefulWidget {
   const LoginWideLayout({Key? key}) : super(key: key);
@@ -114,59 +115,61 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                var message = await _auth.loginService(
+                                print(_usernameController.text);
+                                print(_passwordController.text);
+                                var status = await _auth.loginService(
                                     username: _usernameController.text,
                                     password: _passwordController.text);
-                                // if (message!.contains("Success")) {
-                                //   await SharedPrefs.setUsername(
-                                //       _usernameController.text);
-                                //   await SharedPrefs.setNIM(
-                                //       _passwordController.text);
-                                //   var loginSuccess = SnackBar(
-                                //     shape: RoundedRectangleBorder(
-                                //         borderRadius: BorderRadius.circular(8)),
-                                //     behavior: SnackBarBehavior.floating,
-                                //     dismissDirection:
-                                //         DismissDirection.horizontal,
-                                //     backgroundColor: Colors.blue,
-                                //     duration: Duration(seconds: 2),
-                                //     content: Text(
-                                //       "Signed in as ${_usernameController.text}",
-                                //     ),
-                                //     margin: EdgeInsets.only(
-                                //         bottom:
-                                //             MediaQuery.of(context).size.height -
-                                //                 160,
-                                //         right: 20,
-                                //         left: 20),
-                                //   );
-                                //   print("success");
-                                //   ScaffoldMessenger.of(context)
-                                //       .showSnackBar(loginSuccess);
-                                //   Navigator.pushNamedAndRemoveUntil(
-                                //       context, '/main', (route) => false);
-                                // } else {
-                                //   var loginFailed = SnackBar(
-                                //     shape: RoundedRectangleBorder(
-                                //         borderRadius: BorderRadius.circular(8)),
-                                //     behavior: SnackBarBehavior.floating,
-                                //     dismissDirection:
-                                //         DismissDirection.horizontal,
-                                //     backgroundColor: Colors.red,
-                                //     duration: Duration(seconds: 2),
-                                //     content: Text(
-                                //       "Login failed",
-                                //     ),
-                                //     margin: EdgeInsets.only(
-                                //         bottom:
-                                //             MediaQuery.of(context).size.height -
-                                //                 160,
-                                //         right: 20,
-                                //         left: 20),
-                                //   );
-                                //   ScaffoldMessenger.of(context)
-                                //       .showSnackBar(loginFailed);
-                                // }
+                                // await _auth.loginService(
+                                //     _usernameController.text,
+                                //     _passwordController.text);
+                                if (status!.isLoggedIn == true) {
+                                  var loginSuccess = SnackBar(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    behavior: SnackBarBehavior.floating,
+                                    dismissDirection:
+                                        DismissDirection.horizontal,
+                                    backgroundColor: Colors.blue,
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "Signed in as ${_usernameController.text}",
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        bottom:
+                                            MediaQuery.of(context).size.height -
+                                                160,
+                                        right: 20,
+                                        left: 20),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(loginSuccess);
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      routeMainScreen, (route) => false);
+                                  print('User logged in');
+                                } else {
+                                  var loginFailed = SnackBar(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    behavior: SnackBarBehavior.floating,
+                                    dismissDirection:
+                                        DismissDirection.horizontal,
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "Login failed",
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        bottom:
+                                            MediaQuery.of(context).size.height -
+                                                160,
+                                        right: 20,
+                                        left: 20),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(loginFailed);
+                                  print('Login error');
+                                }
                               }
                               // Navigator.pushNamed(context, '/main');
                             },
@@ -177,7 +180,7 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                // Navigator.pushNamed(context, '/register');
+                                Navigator.pushNamed(context, '/register');
                               },
                               child: Text(
                                 'Daftar Mbanking',

@@ -20,7 +20,7 @@ final List<Map<String, Object>> _menus = [
   {
     'title': 'Saldo',
     'icon': MdiIcons.wallet,
-    'routeScreen': '/saldo',
+    'routeScreen': routeSaldoScreen,
   },
   {
     'title': 'Transfer',
@@ -30,22 +30,22 @@ final List<Map<String, Object>> _menus = [
   {
     'title': 'Deposit',
     'icon': MdiIcons.cashPlus,
-    'routeScreen': '/deposit',
+    'routeScreen': noRoute,
   },
   {
     'title': 'Pembayaran',
     'icon': MdiIcons.creditCardOutline,
-    'routeScreen': '/pembayaran',
+    'routeScreen': routePembayaranScreen,
   },
   {
     'title': 'Pinjaman',
     'icon': MdiIcons.handCoinOutline,
-    'routeScreen': '/pinjaman',
+    'routeScreen': noRoute,
   },
   {
     'title': 'Mutasi',
     'icon': MdiIcons.creditCardRefundOutline,
-    'routeScreen': '/mutasi',
+    'routeScreen': noRoute,
   },
 ];
 

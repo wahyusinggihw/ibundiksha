@@ -65,7 +65,7 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
                       subtitle: Text(data.username!),
                       onTap: () {
                         print(data.userId!);
-                        Navigator.pushNamed(context, '/transaksidetail',
+                        Navigator.pushNamed(context, routeTransaksiDetailScreen,
                             arguments: data.userId);
                       },
                     );

@@ -56,9 +56,11 @@ class _BottomBarState extends State<BottomBar> {
             '#ff6666', 'Cancel', true, ScanMode.QR);
 
         if (barcodeScanRes.isNotEmpty) {
-          _launchUrl();
-          // Navigator.pushNamed(context, routeQrScannerResult,
-          //     arguments: barcodeScanRes);
+          // _launchUrl();
+          Navigator.pushNamed(context, routeQrScannerResult,
+              arguments: barcodeScanRes);
+        } else if (barcodeScanRes == '-1') {
+          // Navigator.pushNamed(context, routeMainScreen);
         }
         print(barcodeScanRes);
       } on PlatformException {

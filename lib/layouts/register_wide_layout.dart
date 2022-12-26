@@ -136,59 +136,56 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                var message = await _auth.loginService(
+                                var status = await _auth.registerService(
+                                    nama: _namaController.text,
                                     username: _usernameController.text,
                                     password: _passwordController.text);
-                                // if (message!.contains("Success")) {
-                                //   await SharedPrefs.setUsername(
-                                //       _usernameController.text);
-                                //   await SharedPrefs.setNIM(
-                                //       _passwordController.text);
-                                //   var loginSuccess = SnackBar(
-                                //     shape: RoundedRectangleBorder(
-                                //         borderRadius: BorderRadius.circular(8)),
-                                //     behavior: SnackBarBehavior.floating,
-                                //     dismissDirection:
-                                //         DismissDirection.horizontal,
-                                //     backgroundColor: Colors.blue,
-                                //     duration: Duration(seconds: 2),
-                                //     content: Text(
-                                //       "Signed in as ${_usernameController.text}",
-                                //     ),
-                                //     margin: EdgeInsets.only(
-                                //         bottom:
-                                //             MediaQuery.of(context).size.height -
-                                //                 160,
-                                //         right: 20,
-                                //         left: 20),
-                                //   );
-                                //   print("success");
-                                //   ScaffoldMessenger.of(context)
-                                //       .showSnackBar(loginSuccess);
-                                //   Navigator.pushNamedAndRemoveUntil(
-                                //       context, '/main', (route) => false);
-                                // } else {
-                                //   var loginFailed = SnackBar(
-                                //     shape: RoundedRectangleBorder(
-                                //         borderRadius: BorderRadius.circular(8)),
-                                //     behavior: SnackBarBehavior.floating,
-                                //     dismissDirection:
-                                //         DismissDirection.horizontal,
-                                //     backgroundColor: Colors.red,
-                                //     duration: Duration(seconds: 2),
-                                //     content: Text(
-                                //       "Login failed",
-                                //     ),
-                                //     margin: EdgeInsets.only(
-                                //         bottom:
-                                //             MediaQuery.of(context).size.height -
-                                //                 160,
-                                //         right: 20,
-                                //         left: 20),
-                                //   );
-                                //   ScaffoldMessenger.of(context)
-                                //       .showSnackBar(loginFailed);
-                                // }
+                                if (status!.isLoggedIn == true) {
+                                  var loginSuccess = SnackBar(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    behavior: SnackBarBehavior.floating,
+                                    dismissDirection:
+                                        DismissDirection.horizontal,
+                                    backgroundColor: Colors.blue,
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "Register Success\nSigned in as ${_usernameController.text}",
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        bottom:
+                                            MediaQuery.of(context).size.height -
+                                                160,
+                                        right: 20,
+                                        left: 20),
+                                  );
+                                  print("success");
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(loginSuccess);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, '/main', (route) => false);
+                                } else {
+                                  var loginFailed = SnackBar(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    behavior: SnackBarBehavior.floating,
+                                    dismissDirection:
+                                        DismissDirection.horizontal,
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 2),
+                                    content: Text(
+                                      "Register failed",
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        bottom:
+                                            MediaQuery.of(context).size.height -
+                                                160,
+                                        right: 20,
+                                        left: 20),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(loginFailed);
+                                }
                               }
                               // Navigator.pushNamed(context, '/main');
                             },
@@ -199,32 +196,18 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                // Navigator.pushNamed(context, '/register');
+                                Navigator.popAndPushNamed(
+                                    context, routeLoginScreen);
                               },
-                              child: Text(
-                                'Daftar Mbanking',
-                                style: TextStyle(
-                                  fontSize: ResponsiveValue(
-                                    context,
-                                    defaultValue: 12.0,
-                                    valueWhen: const [
-                                      Condition.smallerThan(
-                                          name: TABLET, value: 12.0),
-                                      Condition.largerThan(
-                                          name: DESKTOP, value: 60.0),
-                                    ],
-                                  ).value,
-                                ),
-                              ),
+                              child: Text('Login Mbanking'),
                             ),
-                            Spacer(),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, routeRegisterScreen);
-                              },
-                              child: Text('lupa password?'),
-                            ),
+                            // Spacer(),
+                            // TextButton(
+                            //   onPressed: () {
+                            //     // Navigator.pushNamed(context, '/register');
+                            //   },
+                            //   child: Text('lupa password?'),
+                            // ),
                           ],
                         ),
                       ],

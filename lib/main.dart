@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
             ),
         debugShowCheckedModeBanner: false,
         title: "Koperasi Undiksha",
-        initialRoute: routeMainScreen,
+        initialRoute: routeLoginScreen,
         // onGenerateRoute: RouterGenerator.generateRoute,
         routes: {
           noRoute: (context) => NoRouteScreen(),
