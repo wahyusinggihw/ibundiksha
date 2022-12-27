@@ -55,8 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             splashRadius: 20,
             icon: const Icon(Icons.logout),
             onPressed: () {
-              Dialogs().showAlertDialog(
-                  context, 'Logout', 'Anda yakin ingin logout?', '/login');
+              // Dialogs().showAlertDialog(
+              //     context, 'Logout', 'Anda yakin ingin logout?', '/login');
             },
           ),
         ],

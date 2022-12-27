@@ -40,7 +40,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Tarik Saldo"),
+        title: Text("Pembayaran"),
       ),
       body: SafeArea(
         child: Center(

@@ -22,7 +22,7 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
   final TextEditingController _passwordController = TextEditingController();
   final _auth = Auth();
   SharedPrefs sharedPrefs = SharedPrefs();
-
+  bool _isObsecure = true;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -86,7 +86,25 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                           // height: 60,
                           child: TextFormField(
                             controller: _passwordController,
+                            obscureText: _isObsecure,
                             decoration: InputDecoration(
+                              suffixIcon: _isObsecure
+                                  ? IconButton(
+                                      icon: Icon(Icons.visibility_off),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObsecure = false;
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: Icon(Icons.visibility),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObsecure = true;
+                                        });
+                                      },
+                                    ),
                               border: OutlineInputBorder(),
                             ),
                             validator: (value) {

@@ -27,6 +27,7 @@ class Transaksi {
       } else {
         print('failed');
       }
+      return response.data['status'];
     } on DioError catch (error, stacktrace) {
       print('Exception occured: $error stackTrace: $stacktrace');
       throw Exception(error.response);

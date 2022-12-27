@@ -20,6 +20,7 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
   final TextEditingController _passwordController = TextEditingController();
   SharedPrefs sharedPrefs = SharedPrefs();
   final Auth _auth = Auth();
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +88,23 @@ class _LoginWideLayoutState extends State<LoginWideLayout> {
                           child: TextFormField(
                             controller: _passwordController,
                             decoration: InputDecoration(
+                              suffixIcon: _isObscure
+                                  ? IconButton(
+                                      icon: Icon(Icons.visibility_off),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObscure = false;
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: Icon(Icons.visibility),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObscure = true;
+                                        });
+                                      },
+                                    ),
                               border: OutlineInputBorder(),
                             ),
                             validator: (value) {

@@ -64,9 +64,13 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
                       title: Text(data.nama!),
                       subtitle: Text(data.username!),
                       onTap: () {
-                        print(data.userId!);
+                        // print(data.userId!);
                         Navigator.pushNamed(context, routeTransaksiDetailScreen,
-                            arguments: data.userId);
+                            arguments: {
+                              'userId': data.userId,
+                              'nama': data.nama,
+                              'username': data.username,
+                            });
                       },
                     );
                   },
