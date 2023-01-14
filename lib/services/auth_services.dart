@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import "package:dio/dio.dart";
 import 'package:ibundiksha/models/current_user_model.dart';
@@ -15,7 +16,7 @@ class Auth {
   //   }
   // }
 
-  String url = "https://koperasiundiksha.000webhostapp.com";
+  String url = "http://apikoperasi.rey1024.com";
   SharedPrefs sharedPrefs = SharedPrefs();
 
   Future<CurrentUserModel?> loginService({
@@ -38,12 +39,14 @@ class Auth {
       );
 
       var data = response.data;
-      if (data['status'] == 'success') {
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
         // var data = response.data;
         // print(json);
 
+        print(data[0]['username']);
         List<dynamic> dataList = (data['data'] as List).cast<dynamic>();
-        print(data['status']);
 
         double? saldo = double.parse(dataList[0]['saldo']);
         int? userId = int.parse(dataList[0]['user_id']);
@@ -55,15 +58,18 @@ class Auth {
           nama: dataList[0]['nama'],
           password: dataList[0]['password'],
           saldo: saldo,
+          nomorRekening: dataList[0]['nomor_rekening'],
         );
 
         SharedPrefs.addString('userId', currentUserData.userId!.toString());
         SharedPrefs.addString('nama', currentUserData.nama!);
         SharedPrefs.addString('username', currentUserData.username!);
         SharedPrefs.addString('saldo', currentUserData.saldo!.toString());
+        SharedPrefs.addString(
+            'nomorRekening', currentUserData.saldo!.toString());
 
         return currentUserData;
-      } else if (data['status'] == 'error') {
+      } else if (response.statusCode == 'error') {
         print('Login error');
         CurrentUserModel currentUserData = CurrentUserModel(
           isLoggedIn: false,

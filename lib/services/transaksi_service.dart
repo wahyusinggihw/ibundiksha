@@ -27,14 +27,14 @@ class Transaksi {
       } else {
         print('failed');
       }
-      return response.data['status'];
+      return data;
     } on DioError catch (error, stacktrace) {
       print('Exception occured: $error stackTrace: $stacktrace');
       throw Exception(error.response);
     }
   }
 
-  tarikanService({required int userId, required jumlahTarikan}) async {
+  tarikanService({required int userId, required double jumlahTarikan}) async {
     final Response response;
 
     try {
@@ -51,6 +51,7 @@ class Transaksi {
       } else {
         print('failed');
       }
+      return data;
     } on DioError catch (error, stacktrace) {
       print('Exception occured: $error stackTrace: $stacktrace');
       throw Exception(error.response);

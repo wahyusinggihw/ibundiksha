@@ -25,12 +25,12 @@ final List<Map<String, Object>> _menus = [
   {
     'title': 'Transfer',
     'icon': MdiIcons.bankTransferOut,
-    'routeScreen': routeTransaksiScreen,
+    'routeScreen': routeTransferScreen,
   },
   {
-    'title': 'Deposit',
-    'icon': MdiIcons.cashPlus,
-    'routeScreen': noRoute,
+    'title': 'Tarik',
+    'icon': MdiIcons.undoVariant,
+    'routeScreen': routeTarikScreen,
   },
   {
     'title': 'Pembayaran',

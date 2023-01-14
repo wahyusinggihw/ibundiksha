@@ -65,9 +65,9 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               ElevatedButton(
                 onPressed: () {
                   // print(userId);
-                  _transaksi.tarikanService(
-                      userId: int.parse(userId),
-                      jumlahTarikan: _saldoController.text);
+                  // _transaksi.tarikanService(
+                  //     userId: int.parse(userId),
+                  //     jumlahTarikan: _saldoController.text);
 
                   // Navigator.pushNamed(context, '/add');
                 },

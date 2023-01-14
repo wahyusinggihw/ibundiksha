@@ -3,13 +3,13 @@ import 'package:ibundiksha/screens/profile_screen.dart';
 // import 'package:ibundiksha/screens/qrscanner_screen.dart';
 import 'package:ibundiksha/screens/register_screen.dart';
 import 'package:ibundiksha/screens/saldo_screen.dart';
-import 'package:ibundiksha/screens/transaksi_detail_screen.dart';
+import 'package:ibundiksha/screens/transfer_detail_screen.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
 import '../screens/splash_screen.dart';
 import 'route_list.dart';
 import 'package:ibundiksha/screens/login_screen.dart';
 import 'package:ibundiksha/screens/home_screen.dart';
-import 'package:ibundiksha/screens/transaksi_screen.dart';
+import 'package:ibundiksha/screens/transfer_screen.dart';
 import 'package:ibundiksha/screens/no_route.dart';
 
 class RouterGenerator {

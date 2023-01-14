@@ -20,14 +20,14 @@ class SaldoScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text("Transaksi"),
+        title: const Text("Saldo"),
       ),
       body: SafeArea(
           child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Saldo anda adalah:"),
+            const Text("Saldo anda adalah:"),
             Text(saldo),
           ],
         ),

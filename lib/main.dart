@@ -9,12 +9,13 @@ import 'package:ibundiksha/screens/profile_screen.dart';
 import 'package:ibundiksha/screens/register_screen.dart';
 import 'package:ibundiksha/screens/saldo_screen.dart';
 import 'package:ibundiksha/screens/splash_screen.dart';
+import 'package:ibundiksha/screens/tarik_screen.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
 import 'package:ibundiksha/screens/qrscanner_result_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:ibundiksha/screens/transaksi_detail_screen.dart';
-import 'package:ibundiksha/screens/transaksi_screen.dart';
+import 'package:ibundiksha/screens/transfer_detail_screen.dart';
+import 'package:ibundiksha/screens/transfer_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,8 +63,9 @@ class _MyAppState extends State<MyApp> {
           routeQrScannerResult: (context) => QrScannerResult(),
           routeProfileScreen: (context) => ProfileScreen(),
           routeSaldoScreen: (context) => SaldoScreen(),
-          routeTransaksiScreen: (context) => TransaksiScreen(),
-          routeTransaksiDetailScreen: (context) => TransaksiDetailScreen(),
+          routeTransferScreen: (context) => TransferScreen(),
+          routeTransferDetailScreen: (context) => TransferDetailScreen(),
+          routeTarikScreen: (context) => TarikScreen(),
           routePembayaranScreen: (context) => PembayaranScreen(),
         });
   }

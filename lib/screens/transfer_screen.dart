@@ -4,14 +4,14 @@ import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
-class TransaksiScreen extends StatefulWidget {
-  const TransaksiScreen({Key? key}) : super(key: key);
+class TransferScreen extends StatefulWidget {
+  const TransferScreen({Key? key}) : super(key: key);
 
   @override
-  State<TransaksiScreen> createState() => _TransaksiScreenState();
+  State<TransferScreen> createState() => _TransferScreenState();
 }
 
-class _TransaksiScreenState extends State<TransaksiScreen> {
+class _TransferScreenState extends State<TransferScreen> {
   List<ListUsersModel> _listUser = [];
 
   //2. buat fungsi get data user
@@ -49,7 +49,7 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Transaksi"),
+        title: const Text("Transfer"),
       ),
       body: SafeArea(
         child: Center(
@@ -65,7 +65,7 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
                       subtitle: Text(data.username!),
                       onTap: () {
                         // print(data.userId!);
-                        Navigator.pushNamed(context, routeTransaksiDetailScreen,
+                        Navigator.pushNamed(context, routeTransferDetailScreen,
                             arguments: {
                               'userId': data.userId,
                               'nama': data.nama,

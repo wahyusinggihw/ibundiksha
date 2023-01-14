@@ -12,6 +12,7 @@ class CurrentUserModel {
     this.password,
     this.nama,
     this.saldo,
+    this.nomorRekening,
   });
   bool? isLoggedIn;
   int? userId;
@@ -19,6 +20,7 @@ class CurrentUserModel {
   String? password;
   String? nama;
   double? saldo;
+  String? nomorRekening;
 
   factory CurrentUserModel.fromJson(Map<String, dynamic> json) =>
       CurrentUserModel(
@@ -28,6 +30,7 @@ class CurrentUserModel {
         password: json["password"],
         nama: json["nama"],
         saldo: json["saldo"],
+        nomorRekening: json["nomor_rekening"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +40,6 @@ class CurrentUserModel {
         "password": password,
         "nama": nama,
         "saldo": saldo,
+        "nomor_rekening": nomorRekening,
       };
 }
