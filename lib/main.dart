@@ -8,11 +8,13 @@ import 'package:ibundiksha/screens/profile_screen.dart';
 // import 'package:ibundiksha/screens/qrscanner_screen.dart';
 import 'package:ibundiksha/screens/register_screen.dart';
 import 'package:ibundiksha/screens/saldo_screen.dart';
+import 'package:ibundiksha/screens/setoran_screen.dart';
 import 'package:ibundiksha/screens/splash_screen.dart';
 import 'package:ibundiksha/screens/tarik_screen.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
 import 'package:ibundiksha/screens/qrscanner_result_screen.dart';
+import 'package:ibundiksha/widgets/receipt.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/screens/transfer_detail_screen.dart';
 import 'package:ibundiksha/screens/transfer_screen.dart';
@@ -67,6 +69,8 @@ class _MyAppState extends State<MyApp> {
           routeTransferDetailScreen: (context) => TransferDetailScreen(),
           routeTarikScreen: (context) => TarikScreen(),
           routePembayaranScreen: (context) => PembayaranScreen(),
+          routeSetoranScreen: (context) => SetoranScreen(),
+          routeReceiptScreen: (context) => Receipt(),
         });
   }
 }

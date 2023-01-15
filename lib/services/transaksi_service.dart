@@ -24,11 +24,16 @@ class Transaksi {
       var data = response.data;
       if (response.statusCode == 200) {
         print('success');
+        double? saldo = double.parse(data[0]['saldo']);
+        sharedPrefs.addString('saldo', saldo.toString());
       } else {
         print('failed');
       }
       return data;
-    } on DioError catch (error, stacktrace) {}
+    } on DioError catch (error, stacktrace) {
+      print('Exception occured: $error stackTrace: $stacktrace');
+      throw Exception(error.response);
+    }
   }
 
   transferService(
@@ -49,6 +54,10 @@ class Transaksi {
       var data = response.data;
       if (data['status'] == 'success') {
         print('success');
+        currentUserSaldo(userId: idPengirim).then((value) {
+          double? saldo = double.parse(value[0]['saldo']);
+          sharedPrefs.addString('saldo', saldo.toString());
+        });
       } else {
         print('failed');
       }
@@ -72,7 +81,40 @@ class Transaksi {
       );
       var data = response.data;
       if (data['status'] == 'success') {
+        currentUserSaldo(userId: userId).then((value) {
+          double? saldo = double.parse(value[0]['saldo']);
+          sharedPrefs.addString('saldo', saldo.toString());
+        });
         print('success');
+      } else {
+        print('failed');
+      }
+      return data;
+    } on DioError catch (error, stacktrace) {
+      print('Exception occured: $error stackTrace: $stacktrace');
+      throw Exception(error.response);
+    }
+  }
+
+  setoranService({required int userId, required double jumlahSetoran}) async {
+    final Response response;
+
+    try {
+      response = await dio.post(
+        "$url/setoran",
+        data: {
+          "user_id": userId,
+          "jumlah_setoran": jumlahSetoran,
+        },
+      );
+      var data = response.data;
+      if (data['status'] == 'success') {
+        print('success');
+
+        currentUserSaldo(userId: userId).then((value) {
+          double? saldo = double.parse(value[0]['saldo']);
+          sharedPrefs.addString('saldo', saldo.toString());
+        });
       } else {
         print('failed');
       }

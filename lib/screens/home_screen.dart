@@ -25,13 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     nama = sharedPrefs.getString('nama');
-    saldo = sharedPrefs.getString('saldo');
   }
 
   @override
   Widget build(BuildContext context) {
+    saldo = sharedPrefs.getString('saldo');
     var menuGrid = MenuHome().menuGrid;
     var bioBox = MenuHome.bioBox;
     var mainContainer = MenuHome.mainContainer;

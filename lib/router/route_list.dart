@@ -13,3 +13,5 @@ const String routeTransferDetailScreen = '/transferDetail';
 const String routePembayaranScreen = '/pembayaran';
 const String routeTarikScreen = '/tarik';
 const String routeLoginAPI = '/loginapi';
+const String routeSetoranScreen = '/setoran';
+const String routeReceiptScreen = '/receipt';

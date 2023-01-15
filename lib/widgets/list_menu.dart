@@ -17,11 +17,11 @@ final List<Menus> menus = _menus
 
 // list of single menu
 final List<Map<String, Object>> _menus = [
-  {
-    'title': 'Saldo',
-    'icon': MdiIcons.wallet,
-    'routeScreen': routeSaldoScreen,
-  },
+  // {
+  //   'title': 'Saldo',
+  //   'icon': MdiIcons.wallet,
+  //   'routeScreen': routeSaldoScreen,
+  // },
   {
     'title': 'Transfer',
     'icon': MdiIcons.bankTransferOut,
@@ -33,20 +33,25 @@ final List<Map<String, Object>> _menus = [
     'routeScreen': routeTarikScreen,
   },
   {
-    'title': 'Pembayaran',
-    'icon': MdiIcons.creditCardOutline,
-    'routeScreen': routePembayaranScreen,
+    'title': 'Setoran',
+    'icon': MdiIcons.cashFast,
+    'routeScreen': routeSetoranScreen,
   },
-  {
-    'title': 'Pinjaman',
-    'icon': MdiIcons.handCoinOutline,
-    'routeScreen': noRoute,
-  },
-  {
-    'title': 'Mutasi',
-    'icon': MdiIcons.creditCardRefundOutline,
-    'routeScreen': noRoute,
-  },
+  // {
+  //   'title': 'Pembayaran',
+  //   'icon': MdiIcons.creditCardOutline,
+  //   'routeScreen': routePembayaranScreen,
+  // },
+  // {
+  //   'title': 'Pinjaman',
+  //   'icon': MdiIcons.handCoinOutline,
+  //   'routeScreen': noRoute,
+  // },
+  // {
+  //   'title': 'Mutasi',
+  //   'icon': MdiIcons.creditCardRefundOutline,
+  //   'routeScreen': noRoute,
+  // },
 ];
 
 // // list widget

@@ -27,22 +27,16 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    currentUserId = sharedPrefs.getString('userId');
     super.initState();
-    _transaksi.currentUserSaldo(userId: int.parse(currentUserId)).then((value) {
-      setState(() {
-        sharedPrefs.addString('saldo', value[0]['saldo'].toString());
-        saldo = sharedPrefs.getString('saldo');
-      });
-    });
+    currentUserId = sharedPrefs.getString('userId');
+    // _transaksi.currentUserSaldo(userId: int.parse(currentUserId));
   }
 
   //2. buat fungsi get data user
 
   @override
   Widget build(BuildContext context) {
-    // String active = "Transaksi";
-    // String activeScreen = MenuHome.active;
+    saldo = sharedPrefs.getString('saldo');
 
     dynamic dataTransaksi = ModalRoute.of(context)!.settings.arguments;
 
@@ -119,8 +113,8 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                     onPressed: () async {
                       //  validator
                       if (_formKey.currentState!.validate()) {
-                        if (int.parse(saldo) <
-                            int.parse(_jumlahTransferController.text)) {
+                        if (double.parse(sharedPrefs.getString('saldo')) <
+                            double.parse(_jumlahTransferController.text)) {
                           // snackbar
                           var snackbar = SnackBar(
                             shape: RoundedRectangleBorder(
@@ -167,6 +161,11 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);
+                            setState(() {
+                              _transaksi.currentUserSaldo(
+                                  userId: int.parse(currentUserId));
+                              saldo = sharedPrefs.getString('saldo');
+                            });
                           } else {
                             // snackbar
                             var snackbar = SnackBar(

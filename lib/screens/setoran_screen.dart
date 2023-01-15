@@ -6,14 +6,14 @@ import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
-class TarikScreen extends StatefulWidget {
-  const TarikScreen({Key? key}) : super(key: key);
+class SetoranScreen extends StatefulWidget {
+  const SetoranScreen({Key? key}) : super(key: key);
 
   @override
-  State<TarikScreen> createState() => _TarikScreenState();
+  State<SetoranScreen> createState() => _SetoranScreenState();
 }
 
-class _TarikScreenState extends State<TarikScreen> {
+class _SetoranScreenState extends State<SetoranScreen> {
   List<ListUsersModel> _listUser = [];
   TextEditingController _saldoController = TextEditingController();
   final _transaksi = Transaksi();
@@ -51,7 +51,7 @@ class _TarikScreenState extends State<TarikScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Tarik Tunai"),
+        title: const Text("Setor tunai"),
       ),
       body: SafeArea(
         child: Padding(
@@ -108,18 +108,21 @@ class _TarikScreenState extends State<TarikScreen> {
                       // print(userId);
                       //  validator
                       if (_formKey.currentState!.validate()) {
-                        if (double.parse(saldo) <
-                            double.parse(_saldoController.text)) {
+                        var data = await _transaksi.setoranService(
+                            userId: int.parse(userId),
+                            jumlahSetoran: double.parse(_saldoController.text));
+
+                        if (data['status'] == 'success') {
                           // snackbar
                           var snackbar = SnackBar(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                             behavior: SnackBarBehavior.floating,
                             dismissDirection: DismissDirection.horizontal,
-                            backgroundColor: Colors.red,
+                            backgroundColor: Colors.blue,
                             duration: Duration(seconds: 2),
                             content: const Text(
-                              "Saldo tidak cukup",
+                              "Setor tunai berhasil",
                             ),
                             margin: EdgeInsets.only(
                                 bottom:
@@ -129,52 +132,24 @@ class _TarikScreenState extends State<TarikScreen> {
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         } else {
-                          var data = await _transaksi.tarikanService(
-                              userId: int.parse(userId),
-                              jumlahTarikan:
-                                  double.parse(_saldoController.text));
-
-                          if (data['status'] == 'success') {
-                            // snackbar
-                            var snackbar = SnackBar(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              behavior: SnackBarBehavior.floating,
-                              dismissDirection: DismissDirection.horizontal,
-                              backgroundColor: Colors.blue,
-                              duration: Duration(seconds: 2),
-                              content: const Text(
-                                "Tarik tunai berhasil",
-                              ),
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 160,
-                                  right: 20,
-                                  left: 20),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackbar);
-                          } else {
-                            // snackbar
-                            var snackbar = SnackBar(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              behavior: SnackBarBehavior.floating,
-                              dismissDirection: DismissDirection.horizontal,
-                              backgroundColor: Colors.red,
-                              duration: Duration(seconds: 2),
-                              content: const Text(
-                                "Tarik tunai gagal",
-                              ),
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 160,
-                                  right: 20,
-                                  left: 20),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackbar);
-                          }
+                          // snackbar
+                          var snackbar = SnackBar(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            behavior: SnackBarBehavior.floating,
+                            dismissDirection: DismissDirection.horizontal,
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                            content: const Text(
+                              "Setor tunai gagal",
+                            ),
+                            margin: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).size.height - 160,
+                                right: 20,
+                                left: 20),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         }
                       }
                     },
