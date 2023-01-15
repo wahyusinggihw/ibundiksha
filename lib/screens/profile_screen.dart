@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
 
@@ -147,6 +148,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
+            Spacer(),
+            Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.1),
+                child: const Contact())
           ],
         ),
       ),

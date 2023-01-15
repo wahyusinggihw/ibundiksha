@@ -19,6 +19,7 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _nimController = TextEditingController();
   SharedPrefs sharedPrefs = SharedPrefs();
   final Auth _auth = Auth();
   bool _isObscure = true;
@@ -157,6 +158,7 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
                                 var status = await _auth.registerService(
                                     nama: _namaController.text,
                                     username: _usernameController.text,
+                                    nim: _nimController.text.substring(7),
                                     password: _passwordController.text);
                                 if (status!.isLoggedIn == true) {
                                   var loginSuccess = SnackBar(

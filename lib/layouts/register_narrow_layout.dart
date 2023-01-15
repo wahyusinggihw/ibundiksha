@@ -20,6 +20,7 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _nimController = TextEditingController();
   final Auth _auth = Auth();
   bool _isObscure = true;
 
@@ -101,6 +102,26 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text("NIM"),
+                        ),
+                        Container(
+                          // height: 60,
+                          child: TextFormField(
+                            controller: _nimController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "NIM cant empty";
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text("Password"),
                         ),
                         Container(
@@ -160,6 +181,7 @@ class _RegisterNarrowLayoutState extends State<RegisterNarrowLayout> {
                                 var status = await _auth.registerService(
                                     nama: _namaController.text,
                                     username: _usernameController.text,
+                                    nim: _nimController.text.substring(7),
                                     password: _passwordController.text);
                                 if (status!.isLoggedIn == true) {
                                   var loginSuccess = SnackBar(

@@ -70,7 +70,6 @@ class _MyAppState extends State<MyApp> {
           routeTarikScreen: (context) => TarikScreen(),
           routePembayaranScreen: (context) => PembayaranScreen(),
           routeSetoranScreen: (context) => SetoranScreen(),
-          routeReceiptScreen: (context) => Receipt(),
         });
   }
 }

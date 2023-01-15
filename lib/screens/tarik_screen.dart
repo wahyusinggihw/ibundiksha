@@ -178,7 +178,7 @@ class _TarikScreenState extends State<TarikScreen> {
                         }
                       }
                     },
-                    child: const Text("Tambah"),
+                    child: const Text("Tarik Tunai"),
                   ),
                 ),
               ),
