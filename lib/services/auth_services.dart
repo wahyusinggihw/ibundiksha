@@ -42,43 +42,38 @@ class Auth {
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        // var data = response.data;
-        // print(json);
-
-        print(data[0]['username']);
-        List<dynamic> dataList = (data['data'] as List).cast<dynamic>();
-
-        double? saldo = double.parse(dataList[0]['saldo']);
-        int? userId = int.parse(dataList[0]['user_id']);
+        double? saldo = double.parse(data[0]['saldo']);
+        int? userId = int.parse(data[0]['user_id']);
 
         CurrentUserModel currentUserData = CurrentUserModel(
           isLoggedIn: true,
           userId: userId,
-          username: dataList[0]['username'],
-          nama: dataList[0]['nama'],
-          password: dataList[0]['password'],
+          username: data[0]['username'],
+          nama: data[0]['nama'],
+          password: data[0]['password'],
           saldo: saldo,
-          nomorRekening: dataList[0]['nomor_rekening'],
+          nomorRekening: data[0]['nomor_rekening'],
         );
 
-        SharedPrefs.addString('userId', currentUserData.userId!.toString());
-        SharedPrefs.addString('nama', currentUserData.nama!);
-        SharedPrefs.addString('username', currentUserData.username!);
-        SharedPrefs.addString('saldo', currentUserData.saldo!.toString());
-        SharedPrefs.addString(
+        sharedPrefs.addString('userId', currentUserData.userId!.toString());
+        sharedPrefs.addString('nama', currentUserData.nama!);
+        sharedPrefs.addString('username', currentUserData.username!);
+        sharedPrefs.addString('saldo', currentUserData.saldo!.toString());
+        sharedPrefs.addString(
             'nomorRekening', currentUserData.saldo!.toString());
 
         return currentUserData;
-      } else if (response.statusCode == 'error') {
+      } else if (response.statusCode == 404) {
         print('Login error');
-        CurrentUserModel currentUserData = CurrentUserModel(
-          isLoggedIn: false,
-        );
-        return currentUserData;
       }
     } on DioError catch (error, stacktrace) {
-      print('Exception occured: $error stackTrace: $stacktrace');
-      throw Exception(error.response);
+      print('Login error');
+      // print('Exception occured: $error stackTrace: $stacktrace');
+      // throw Exception(error.response);
+      CurrentUserModel currentUserData = CurrentUserModel(
+        isLoggedIn: false,
+      );
+      return currentUserData;
     }
     return null;
   }

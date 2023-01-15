@@ -10,11 +10,16 @@ class SharedPrefs {
   }
 
   String getString(key) {
+    _sharedPrefs!.reload();
     return _sharedPrefs!.getString(key)!;
   }
 
-  static addString(String key, value) async {
+  addString(String key, value) async {
     await _sharedPrefs!.setString(key, value);
+  }
+
+  removeString(key) async {
+    await _sharedPrefs!.remove(key);
   }
 
   clearString() async {

@@ -6,19 +6,44 @@ import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 
 class Transaksi {
-  String url = "https://koperasiundiksha.000webhostapp.com";
+  String url = "http://apikoperasi.rey1024.com/";
   Dio dio = Dio();
   SharedPrefs sharedPrefs = SharedPrefs();
 
-  transferService({required int userId, required int jumlahSetoran}) async {
+  currentUserSaldo({
+    required int userId,
+  }) async {
+    final Response response;
+    try {
+      response = await dio.post(
+        "$url/getsingleuser",
+        data: {
+          "user_id": userId,
+        },
+      );
+      var data = response.data;
+      if (response.statusCode == 200) {
+        print('success');
+      } else {
+        print('failed');
+      }
+      return data;
+    } on DioError catch (error, stacktrace) {}
+  }
+
+  transferService(
+      {required idPengirim,
+      required int jumlahTransfer,
+      required String nomorRekening}) async {
     final Response response;
 
     try {
       response = await dio.post(
-        "$url/setoran?",
+        "$url/transfer",
         data: {
-          "user_id": userId,
-          "jumlah_setoran": jumlahSetoran,
+          "nomor_rekening": nomorRekening,
+          "jumlah_transfer": jumlahTransfer,
+          "id_pengirim": idPengirim,
         },
       );
       var data = response.data;

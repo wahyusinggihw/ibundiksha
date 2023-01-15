@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
+import 'package:ibundiksha/widgets/my_style.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
 class TransferScreen extends StatefulWidget {
@@ -12,13 +13,14 @@ class TransferScreen extends StatefulWidget {
 }
 
 class _TransferScreenState extends State<TransferScreen> {
+  TextEditingController _nomorRekeningController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  //2. buat fungsi get data user
   List<ListUsersModel> _listUser = [];
 
-  //2. buat fungsi get data user
   getUsers() async {
-    ListUsersService _service = ListUsersService();
-
-    await _service.getDataUsers().then((value) {
+    final ListUsersService service = ListUsersService();
+    await service.getDataUsers().then((value) {
       if (mounted) {
         setState(() {
           _listUser = value!;
@@ -32,6 +34,10 @@ class _TransferScreenState extends State<TransferScreen> {
     super.initState();
     getUsers();
   }
+
+  bool userExist = false;
+  late String nama;
+  late String nomorRekening;
 
   @override
   Widget build(BuildContext context) {
@@ -52,30 +58,81 @@ class _TransferScreenState extends State<TransferScreen> {
         title: const Text("Transfer"),
       ),
       body: SafeArea(
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _listUser.length,
-                  itemBuilder: (context, index) {
-                    ListUsersModel data = _listUser[index];
-                    return ListTile(
-                      title: Text(data.nama!),
-                      subtitle: Text(data.username!),
-                      onTap: () {
-                        // print(data.userId!);
-                        Navigator.pushNamed(context, routeTransferDetailScreen,
-                            arguments: {
-                              'userId': data.userId,
-                              'nama': data.nama,
-                              'username': data.username,
-                            });
-                      },
-                    );
-                  },
+              SizedBox(
+                height: 20,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Masukkan nomor rekening tujuan",
+                      style: MyStyle().h1Style(),
+                    ),
+                    TextFormField(
+                      controller: _nomorRekeningController,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.account_balance_wallet),
+                        labelText: "Nomor Rekening",
+                        hintText: "Masukkan Nomor Rekening",
+                      ),
+                      validator: (value) => value!.isEmpty
+                          ? "Nomor rekening tidak boleh kosong"
+                          : null,
+                    ),
+                  ],
                 ),
               ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    for (var i = 0; i < _listUser.length; i++) {
+                      if (_listUser[i].nomorRekening ==
+                          _nomorRekeningController.text) {
+                        userExist = true;
+                        nama = _listUser[i].nama!;
+                        nomorRekening = _listUser[i].nomorRekening!;
+                        break;
+                      } else {
+                        userExist = false;
+                      }
+                    }
+                    if (!userExist) {
+                      var notExits = SnackBar(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        behavior: SnackBarBehavior.floating,
+                        dismissDirection: DismissDirection.horizontal,
+                        backgroundColor: Colors.red,
+                        duration: Duration(seconds: 2),
+                        content: Text(
+                          "Nomor rekening tidak ditemukan",
+                        ),
+                        margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height - 150,
+                            right: 20,
+                            left: 20),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(notExits);
+                      print('Nomor rekening tidak ditemukan');
+                    } else {
+                      Navigator.pushNamed(context, routeTransferDetailScreen,
+                          arguments: {
+                            'nomorRekening': _nomorRekeningController.text,
+                            'nama': nama,
+                          });
+                    }
+                  }
+                },
+                child: const Text("Lanjutkan"),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             ],
           ),
         ),

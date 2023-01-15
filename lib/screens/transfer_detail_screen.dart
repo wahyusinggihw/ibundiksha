@@ -15,18 +15,26 @@ class TransferDetailScreen extends StatefulWidget {
 
 class _TransferDetailScreenState extends State<TransferDetailScreen> {
   List<ListUsersModel> _listUser = [];
-  TextEditingController _saldoController = TextEditingController();
+  TextEditingController _jumlahTransferController = TextEditingController();
   final _transaksi = Transaksi();
   final _formKey = GlobalKey<FormState>();
   SharedPrefs sharedPrefs = SharedPrefs();
   String saldo = '';
+  String currentUserId = '';
   MyStyle myStyle = MyStyle();
+  Transaksi transaksi = Transaksi();
 
   @override
   void initState() {
     // TODO: implement initState
+    currentUserId = sharedPrefs.getString('userId');
     super.initState();
-    saldo = sharedPrefs.getString('saldo');
+    _transaksi.currentUserSaldo(userId: int.parse(currentUserId)).then((value) {
+      setState(() {
+        sharedPrefs.addString('saldo', value[0]['saldo'].toString());
+        saldo = sharedPrefs.getString('saldo');
+      });
+    });
   }
 
   //2. buat fungsi get data user
@@ -62,7 +70,7 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
               ListTile(
                 leading: const Icon(Icons.account_circle, size: 50),
                 title: Text(dataTransaksi['nama']),
-                subtitle: Text(dataTransaksi['username']),
+                subtitle: Text(dataTransaksi['nomorRekening']),
               ),
               const SizedBox(height: 20),
               Text("Nominal transfer", style: MyStyle().h1Style()),
@@ -75,7 +83,7 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        controller: _saldoController,
+                        controller: _jumlahTransferController,
                         decoration: const InputDecoration(
                             // border: OutlineInputBorder(),
                             ),
@@ -111,30 +119,8 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                     onPressed: () async {
                       //  validator
                       if (_formKey.currentState!.validate()) {
-                        var data = await _transaksi.transferService(
-                            userId: int.parse(dataTransaksi['userId']),
-                            jumlahSetoran: int.parse(_saldoController.text));
-
-                        if (data['status'] == 'success') {
-                          // snackbar
-                          var snackbar = SnackBar(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            behavior: SnackBarBehavior.floating,
-                            dismissDirection: DismissDirection.horizontal,
-                            backgroundColor: Colors.blue,
-                            duration: Duration(seconds: 2),
-                            content: const Text(
-                              "Transfer berhasil",
-                            ),
-                            margin: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height - 160,
-                                right: 20,
-                                left: 20),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                        } else {
+                        if (int.parse(saldo) <
+                            int.parse(_jumlahTransferController.text)) {
                           // snackbar
                           var snackbar = SnackBar(
                             shape: RoundedRectangleBorder(
@@ -144,7 +130,7 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                             backgroundColor: Colors.red,
                             duration: Duration(seconds: 2),
                             content: const Text(
-                              "Transfer gagal",
+                              "Saldo tidak cukup",
                             ),
                             margin: EdgeInsets.only(
                                 bottom:
@@ -153,10 +139,59 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                                 left: 20),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        } else {
+                          var data = await _transaksi.transferService(
+                            nomorRekening: dataTransaksi['nomorRekening'],
+                            idPengirim: int.parse(currentUserId),
+                            jumlahTransfer:
+                                int.parse(_jumlahTransferController.text),
+                          );
+
+                          if (data['status'] == 'success') {
+                            // snackbar
+                            var snackbar = SnackBar(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              behavior: SnackBarBehavior.floating,
+                              dismissDirection: DismissDirection.horizontal,
+                              backgroundColor: Colors.blue,
+                              duration: Duration(seconds: 2),
+                              content: const Text(
+                                "Transfer berhasil",
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).size.height - 160,
+                                  right: 20,
+                                  left: 20),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
+                          } else {
+                            // snackbar
+                            var snackbar = SnackBar(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              behavior: SnackBarBehavior.floating,
+                              dismissDirection: DismissDirection.horizontal,
+                              backgroundColor: Colors.red,
+                              duration: Duration(seconds: 2),
+                              content: const Text(
+                                "Transfer gagal",
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).size.height - 160,
+                                  right: 20,
+                                  left: 20),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
+                          }
                         }
                       }
                     },
-                    child: const Text("Tambah"),
+                    child: const Text("Transfer"),
                   ),
                 ),
               ),
