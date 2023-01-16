@@ -38,6 +38,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   material_design_icons_flutter: ^5.0.6996
+  push_notification: ^1.1.1
   responsive_framework: ^0.2.0
   shared_preferences: ^2.0.15
   url_launcher: ^6.1.7

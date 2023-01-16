@@ -14,10 +14,10 @@ import 'package:ibundiksha/screens/tarik_screen.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
 import 'package:ibundiksha/screens/qrscanner_result_screen.dart';
-import 'package:ibundiksha/widgets/receipt.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/screens/transfer_detail_screen.dart';
 import 'package:ibundiksha/screens/transfer_screen.dart';
+import 'package:push_notification/push_notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +35,33 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   SharedPrefs sharedPrefs = SharedPrefs();
+
+  late Notificator notification;
+
+  String notificationKey = 'key';
+  String _bodyText = 'notification test';
+
+  @override
+  void initState() {
+    super.initState();
+    notification = Notificator(
+      onPermissionDecline: () {
+        // ignore: avoid_print
+        print('permission decline');
+      },
+      onNotificationTapCallback: (notificationData) {
+        setState(
+          () {
+            _bodyText = 'notification open: '
+                '${notificationData[notificationKey].toString()}';
+          },
+        );
+      },
+    )..requestPermissions(
+        requestSoundPermission: true,
+        requestAlertPermission: true,
+      );
+  }
 
   @override
   Widget build(BuildContext context) {

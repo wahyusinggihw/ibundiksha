@@ -81,7 +81,7 @@ class Auth {
 
   Future<CurrentUserModel?> registerService(
       {required String username, nama, nim, password}) async {
-    final Response response;
+    // final Response response;
 
     try {
       var response = await dio.post('$url/register', data: {

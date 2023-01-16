@@ -4,11 +4,13 @@ import "package:dio/dio.dart";
 import 'package:ibundiksha/models/current_user_model.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/services/notif_services.dart';
 
 class Transaksi {
   String url = "http://apikoperasi.rey1024.com/";
   Dio dio = Dio();
   SharedPrefs sharedPrefs = SharedPrefs();
+  MyNotificationService notifService = MyNotificationService();
 
   currentUserSaldo({
     required int userId,
@@ -56,6 +58,9 @@ class Transaksi {
           double? saldo = double.parse(value[0]['saldo']);
           sharedPrefs.addString('saldo', saldo.toString());
         });
+
+        // notifService.transferNotif("Transfer",
+        //     "Transfer ke rekening $nomorRekening sebesar $jumlahTransfer berhasil");
       } else {
         print('failed');
       }
