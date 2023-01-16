@@ -5,7 +5,10 @@ import 'package:ibundiksha/screens/profile_screen.dart';
 // import 'package:ibundiksha/screens/qrscanner_screen.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
+import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../models/list_users_model.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -16,6 +19,12 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   // final NotificationHelper _notificationHelper = NotificationHelper();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print("panjang : coba");
+  //   getUsers();
+  // }
 
   int pageIndex = 0;
   final List<Widget> listPage = [
@@ -26,10 +35,22 @@ class _BottomBarState extends State<BottomBar> {
 
   String _scanBarcode = '';
 
-  @override
-  void initState() {
-    super.initState();
+  List<ListUsersModel> _listUser = [];
+
+  getUsers() async {
+    final ListUsersService service = ListUsersService();
+    await service.getDataUsers().then((value) {
+      if (mounted) {
+        setState(() {
+          _listUser = value!;
+        });
+      }
+    });
   }
+
+  bool userExist = false;
+  String nama = '';
+  late String nomorRekening;
 
   // @override
   // void dispose() {
@@ -50,6 +71,7 @@ class _BottomBarState extends State<BottomBar> {
 
     Future<void> scanQR() async {
       String barcodeScanRes;
+
       // Platform messages may fail, so we use a try/catch PlatformException.
       try {
         barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -65,8 +87,23 @@ class _BottomBarState extends State<BottomBar> {
         if (barcodeScanRes == '-1') {
           Navigator.pushNamed(context, routeMainScreen);
         } else {
-          Navigator.pushNamed(context, routeQrScannerResult,
-              arguments: barcodeScanRes);
+          getUsers();
+          for (var i = 0; i < _listUser.length; i++) {
+            if (_listUser[i].nomorRekening == barcodeScanRes) {
+              userExist = true;
+              nama = _listUser[i].nama!;
+              nomorRekening = _listUser[i].nomorRekening!;
+              break;
+            } else {
+              userExist = false;
+            }
+          }
+          // print("namanya $nama");
+          // print(_listUser.length);
+          Navigator.pushNamed(context, routeTransferDetailScreen, arguments: {
+            "nomorRekening": barcodeScanRes,
+            "nama": nama,
+          });
         }
         print(barcodeScanRes);
       } on PlatformException {
@@ -111,9 +148,9 @@ class _BottomBarState extends State<BottomBar> {
                   },
                   items: const [
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.settings_outlined),
-                        activeIcon: Icon(Icons.settings),
-                        label: 'Setting'),
+                        icon: Icon(Icons.home_outlined),
+                        activeIcon: Icon(Icons.home),
+                        label: 'Home'),
                     // BottomNavigationBarItem(
                     //     icon: Icon(
                     //       Icons.qr_code_scanner_outlined,

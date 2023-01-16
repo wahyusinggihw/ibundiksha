@@ -63,8 +63,12 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
               Text("Rekening Tujuan", style: MyStyle().h1Style()),
               ListTile(
                 leading: const Icon(Icons.account_circle, size: 50),
-                title: Text(dataTransaksi['nama']),
-                subtitle: Text(dataTransaksi['nomorRekening']),
+                title: Text(dataTransaksi['nama'] != null
+                    ? dataTransaksi['nama']
+                    : "Nama tidak ditemukan"),
+                subtitle: Text(dataTransaksi['nomorRekening'] != null
+                    ? dataTransaksi['nomorRekening']
+                    : "Nomor rekening tidak ditemukan"),
               ),
               const SizedBox(height: 20),
               Text("Nominal transfer", style: MyStyle().h1Style()),
@@ -77,6 +81,7 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _jumlahTransferController,
                         decoration: const InputDecoration(
                             // border: OutlineInputBorder(),

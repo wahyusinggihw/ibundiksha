@@ -75,6 +75,7 @@ class _TransferScreenState extends State<TransferScreen> {
                       style: MyStyle().h1Style(),
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: _nomorRekeningController,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.account_balance_wallet),
