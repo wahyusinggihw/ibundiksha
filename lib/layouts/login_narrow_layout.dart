@@ -157,12 +157,12 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                                     content: Text(
                                       "Signed in as ${_usernameController.text}",
                                     ),
-                                    margin: EdgeInsets.only(
-                                        bottom:
-                                            MediaQuery.of(context).size.height -
-                                                160,
-                                        right: 20,
-                                        left: 20),
+                                    // margin: EdgeInsets.only(
+                                    //     bottom:
+                                    //         MediaQuery.of(context).size.height -
+                                    //             160,
+                                    //     right: 20,
+                                    //     left: 20),
                                   );
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(loginSuccess);
@@ -181,12 +181,12 @@ class _LoginNarrowLayoutState extends State<LoginNarrowLayout> {
                                     content: Text(
                                       "Login failed",
                                     ),
-                                    margin: EdgeInsets.only(
-                                        bottom:
-                                            MediaQuery.of(context).size.height -
-                                                160,
-                                        right: 20,
-                                        left: 20),
+                                    // margin: EdgeInsets.only(
+                                    //     bottom:
+                                    //         MediaQuery.of(context).size.height -
+                                    //             160,
+                                    //     right: 20,
+                                    //     left: 20),
                                   );
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(loginFailed);

@@ -34,9 +34,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  SharedPrefs sharedPrefs = SharedPrefs();
 
   @override
   Widget build(BuildContext context) {
+    // sharedPrefs.addBool('isLoggedIn', false);
+    bool isLoggedIn = sharedPrefs.getBool('isLoggedIn') == null
+        ? false
+        : sharedPrefs.getBool('isLoggedIn')!;
     return MaterialApp(
         builder: (context, widget) => ResponsiveWrapper.builder(
               ClampingScrollWrapper.builder(context, widget!),
@@ -52,7 +57,7 @@ class _MyAppState extends State<MyApp> {
             ),
         debugShowCheckedModeBanner: false,
         title: "Koperasi Undiksha",
-        initialRoute: routeLoginScreen,
+        initialRoute: isLoggedIn == true ? routeMainScreen : routeLoginScreen,
         // onGenerateRoute: RouterGenerator.generateRoute,
         routes: {
           noRoute: (context) => NoRouteScreen(),

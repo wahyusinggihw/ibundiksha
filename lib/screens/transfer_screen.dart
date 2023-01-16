@@ -115,10 +115,10 @@ class _TransferScreenState extends State<TransferScreen> {
                         content: Text(
                           "Nomor rekening tidak ditemukan",
                         ),
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height - 150,
-                            right: 20,
-                            left: 20),
+                        // margin: EdgeInsets.only(
+                        //     bottom: MediaQuery.of(context).size.height - 150,
+                        //     right: 20,
+                        //     left: 20),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(notExits);
                       print('Nomor rekening tidak ditemukan');

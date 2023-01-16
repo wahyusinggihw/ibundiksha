@@ -63,12 +63,9 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
               Text("Rekening Tujuan", style: MyStyle().h1Style()),
               ListTile(
                 leading: const Icon(Icons.account_circle, size: 50),
-                title: Text(dataTransaksi['nama'] != null
-                    ? dataTransaksi['nama']
-                    : "Nama tidak ditemukan"),
-                subtitle: Text(dataTransaksi['nomorRekening'] != null
-                    ? dataTransaksi['nomorRekening']
-                    : "Nomor rekening tidak ditemukan"),
+                title: Text(dataTransaksi['nama'] ?? "Nama tidak ditemukan"),
+                subtitle: Text(dataTransaksi['nomorRekening'] ??
+                    "Nomor rekening tidak ditemukan"),
               ),
               const SizedBox(height: 20),
               Text("Nominal transfer", style: MyStyle().h1Style()),
@@ -131,11 +128,11 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                             content: const Text(
                               "Saldo tidak cukup",
                             ),
-                            margin: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height - 160,
-                                right: 20,
-                                left: 20),
+                            // margin: EdgeInsets.only(
+                            //     bottom:
+                            //         MediaQuery.of(context).size.height - 160,
+                            //     right: 20,
+                            //     left: 20),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         } else {
@@ -158,11 +155,11 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                               content: const Text(
                                 "Transfer berhasil",
                               ),
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 160,
-                                  right: 20,
-                                  left: 20),
+                              // margin: EdgeInsets.only(
+                              //     bottom:
+                              //         MediaQuery.of(context).size.height - 160,
+                              //     right: 20,
+                              //     left: 20),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);
@@ -183,11 +180,11 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                               content: const Text(
                                 "Transfer gagal",
                               ),
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 160,
-                                  right: 20,
-                                  left: 20),
+                              // margin: EdgeInsets.only(
+                              //     bottom:
+                              //         MediaQuery.of(context).size.height - 160,
+                              //     right: 20,
+                              //     left: 20),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);

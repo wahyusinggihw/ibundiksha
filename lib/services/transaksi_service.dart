@@ -23,7 +23,6 @@ class Transaksi {
       );
       var data = response.data;
       if (response.statusCode == 200) {
-        print('success');
         double? saldo = double.parse(data[0]['saldo']);
         sharedPrefs.addString('saldo', saldo.toString());
       } else {
@@ -53,7 +52,6 @@ class Transaksi {
       );
       var data = response.data;
       if (data['status'] == 'success') {
-        print('success');
         currentUserSaldo(userId: idPengirim).then((value) {
           double? saldo = double.parse(value[0]['saldo']);
           sharedPrefs.addString('saldo', saldo.toString());
@@ -109,8 +107,6 @@ class Transaksi {
       );
       var data = response.data;
       if (data['status'] == 'success') {
-        print('success');
-
         currentUserSaldo(userId: userId).then((value) {
           double? saldo = double.parse(value[0]['saldo']);
           sharedPrefs.addString('saldo', saldo.toString());

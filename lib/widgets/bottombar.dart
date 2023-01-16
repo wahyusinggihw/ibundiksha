@@ -48,10 +48,6 @@ class _BottomBarState extends State<BottomBar> {
     });
   }
 
-  bool userExist = false;
-  String nama = '';
-  late String nomorRekening;
-
   // @override
   // void dispose() {
   //   selectNotificationSubject.close();
@@ -87,6 +83,9 @@ class _BottomBarState extends State<BottomBar> {
         if (barcodeScanRes == '-1') {
           Navigator.pushNamed(context, routeMainScreen);
         } else {
+          bool userExist = false;
+          String nama = '';
+          late String nomorRekening;
           getUsers();
           for (var i = 0; i < _listUser.length; i++) {
             if (_listUser[i].nomorRekening == barcodeScanRes) {
@@ -98,12 +97,32 @@ class _BottomBarState extends State<BottomBar> {
               userExist = false;
             }
           }
+          print(userExist);
+          if (!userExist) {
+            var notExits = SnackBar(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.horizontal,
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 2),
+              content: Text(
+                "Nomor rekening tidak ditemukan",
+              ),
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height - 200,
+                  right: 20,
+                  left: 20),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(notExits);
+          } else {
+            Navigator.pushNamed(context, routeTransferDetailScreen, arguments: {
+              "nomorRekening": barcodeScanRes,
+              "nama": nama,
+            });
+          }
           // print("namanya $nama");
           // print(_listUser.length);
-          Navigator.pushNamed(context, routeTransferDetailScreen, arguments: {
-            "nomorRekening": barcodeScanRes,
-            "nama": nama,
-          });
         }
         print(barcodeScanRes);
       } on PlatformException {

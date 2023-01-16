@@ -27,6 +27,7 @@ class _TarikScreenState extends State<TarikScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(sharedPrefs.getBool('isLoggedIn'));
     saldo = sharedPrefs.getString('saldo');
     userId = sharedPrefs.getString('userId');
   }
@@ -83,6 +84,7 @@ class _TarikScreenState extends State<TarikScreen> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _saldoController,
                         decoration: const InputDecoration(
                             // border: OutlineInputBorder(),
@@ -146,11 +148,11 @@ class _TarikScreenState extends State<TarikScreen> {
                               content: const Text(
                                 "Tarik tunai berhasil",
                               ),
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 160,
-                                  right: 20,
-                                  left: 20),
+                              // margin: EdgeInsets.only(
+                              //     bottom:
+                              //         MediaQuery.of(context).size.height - 160,
+                              //     right: 20,
+                              //     left: 20),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);
@@ -166,11 +168,11 @@ class _TarikScreenState extends State<TarikScreen> {
                               content: const Text(
                                 "Tarik tunai gagal",
                               ),
-                              margin: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height - 160,
-                                  right: 20,
-                                  left: 20),
+                              // margin: EdgeInsets.only(
+                              //     bottom:
+                              //         MediaQuery.of(context).size.height - 160,
+                              //     right: 20,
+                              //     left: 20),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);

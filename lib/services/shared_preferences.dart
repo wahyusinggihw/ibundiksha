@@ -22,7 +22,16 @@ class SharedPrefs {
     await _sharedPrefs!.remove(key);
   }
 
-  clearString() async {
+  addBool(String key, value) async {
+    await _sharedPrefs!.setBool(key, value);
+  }
+
+  getBool(key) {
+    _sharedPrefs!.reload();
+    return _sharedPrefs!.getBool(key);
+  }
+
+  clearPrefs() async {
     await _sharedPrefs!.clear();
   }
 }

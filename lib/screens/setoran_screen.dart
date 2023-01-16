@@ -83,6 +83,7 @@ class _SetoranScreenState extends State<SetoranScreen> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _saldoController,
                         decoration: const InputDecoration(
                             // border: OutlineInputBorder(),

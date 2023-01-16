@@ -61,6 +61,7 @@ class Auth {
         sharedPrefs.addString('saldo', currentUserData.saldo!.toString());
         sharedPrefs.addString(
             'nomorRekening', currentUserData.saldo!.toString());
+        sharedPrefs.addBool('isLoggedIn', currentUserData.isLoggedIn!);
 
         return currentUserData;
       } else if (response.statusCode == 404) {
@@ -113,7 +114,7 @@ class Auth {
   }
 
   logoutService() {
-    sharedPrefs.clearString();
+    sharedPrefs.addBool('isLoggedIn', false);
     CurrentUserModel currentUserData = CurrentUserModel(
       isLoggedIn: false,
     );
