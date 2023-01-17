@@ -72,7 +72,7 @@ class Transaksi {
 
         notifService.sendPushNotification(
             title: 'Dana Masuk!',
-            body: 'Dana $jumlahTransfer masuk ke rekening $nomorRekening',
+            body: 'Dana Rp.$jumlahTransfer masuk ke rekening $nomorRekening',
             token: token);
       } else {
         print('failed');
