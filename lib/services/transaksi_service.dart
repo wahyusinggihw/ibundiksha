@@ -5,6 +5,7 @@ import 'package:ibundiksha/models/current_user_model.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/services/notif_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Transaksi {
   String url = "http://apikoperasi.rey1024.com/";
@@ -42,8 +43,8 @@ class Transaksi {
       required int jumlahTransfer,
       required String nomorRekening}) async {
     final Response response;
-
     try {
+      String token = '';
       response = await dio.post(
         "$url/transfer",
         data: {
@@ -59,8 +60,20 @@ class Transaksi {
           sharedPrefs.addString('saldo', saldo.toString());
         });
 
-        // notifService.transferNotif("Transfer",
-        //     "Transfer ke rekening $nomorRekening sebesar $jumlahTransfer berhasil");
+        await FirebaseFirestore.instance
+            .collection('usersToken')
+            .doc(nomorRekening)
+            .get()
+            .then((DocumentSnapshot doc) {
+          final dbData = doc.data() as Map<String, dynamic>;
+          token = dbData['token'];
+          print('token di firestore: $token');
+        });
+
+        notifService.sendPushNotification(
+            title: 'Dana Masuk!',
+            body: 'Dana $jumlahTransfer masuk ke rekening $nomorRekening',
+            token: token);
       } else {
         print('failed');
       }

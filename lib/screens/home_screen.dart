@@ -7,6 +7,7 @@ import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/services/auth_services.dart';
+import 'package:ibundiksha/services/notif_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   SharedPrefs sharedPrefs = SharedPrefs();
+  MyNotificationService myNotificationService = MyNotificationService();
   String nama = '';
   String saldo = '';
   final _auth = Auth();
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     nama = sharedPrefs.getString('nama');
+    myNotificationService.getToken();
   }
 
   @override

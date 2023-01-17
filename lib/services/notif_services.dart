@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:dio/dio.dart';
 
 class MyNotificationService {
+  SharedPrefs sharedPrefs = SharedPrefs();
+  Dio dio = Dio();
+
   void requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -26,39 +34,58 @@ class MyNotificationService {
   }
 
   void getToken() async {
-    String? token = await FirebaseMessaging.instance.getToken().then((value) {
+    await FirebaseMessaging.instance.getToken().then((value) {
       print('token: $value');
-      // return value;
+      saveToken(value);
     });
   }
 
-  void saveToken() {}
-  // late Notificator notification;
+  void saveToken(String? token) {
+    String? noRek = sharedPrefs.getString('nomorRekening');
 
-  // int transferNotifId = 1;
+    FirebaseFirestore.instance
+        .collection('usersToken')
+        .doc(noRek)
+        .set({'token': token});
+  }
 
-  // transferNotif(String title, String body) {
-  //   String notificationKey = 'key';
-  //   String _bodyText = 'notification test';
-  //   notification.show(
-  //     transferNotifId,
-  //     title,
-  //     body,
-  //     data: {notificationKey: '[notification data]'},
-  //     notificationSpecifics: NotificationSpecifics(AndroidNotificationSpecifics(
-  //       autoCancelable: true,
-  //     )),
-  //   );
-  // }
-
-  // notification.show(1, "tes notif", 'ini adalah notif tes',
-  //           imageUrl:
-  //               "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
-  //           data: {notificationKey: '[notification data]'},
-  //           notificationSpecifics: NotificationSpecifics(
-  //             AndroidNotificationSpecifics(
-  //               autoCancelable: true,
-  //             ),
-  //           ))
-  //       : print("notif tidak muncul");
+  void sendPushNotification(
+      {required String title,
+      required String body,
+      required String token}) async {
+    try {
+      await dio.post(
+        'https://fcm.googleapis.com/fcm/send',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'key=AAAAjKyKvQY:APA91bGRDJNRUlwAPhMMeOCrAdcQB8qj-3ZbsjDOY4gAaGBd3ho4dHi73uBb22IFMP4sevEpxwNpbFJSu-BgahD32XclWw1REbEntL53L1SuubpmpqSxbFRTb2uAyRgVqkMP_9q8jD6n'
+          },
+        ),
+        data: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': body,
+              'title': title,
+            },
+            'notification': <String, dynamic>{
+              'body': body,
+              'title': title,
+              'android_channel_id': 'dbbank'
+            },
+            'to': token,
+          },
+        ),
+      );
+    } on DioError catch (error, stacktrace) {
+      if (kDebugMode) {
+        print('Exception occured: $error stackTrace: $stacktrace');
+        throw Exception(error.response);
+      }
+    }
+  }
 }

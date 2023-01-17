@@ -60,7 +60,7 @@ class Auth {
         sharedPrefs.addString('username', currentUserData.username!);
         sharedPrefs.addString('saldo', currentUserData.saldo!.toString());
         sharedPrefs.addString(
-            'nomorRekening', currentUserData.saldo!.toString());
+            'nomorRekening', currentUserData.nomorRekening!.toString());
         sharedPrefs.addBool('isLoggedIn', currentUserData.isLoggedIn!);
 
         return currentUserData;
