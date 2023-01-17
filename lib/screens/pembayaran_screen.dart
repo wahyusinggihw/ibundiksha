@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/services/list_users_service.dart';
-import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
@@ -13,8 +11,7 @@ class PembayaranScreen extends StatefulWidget {
 }
 
 class _PembayaranScreenState extends State<PembayaranScreen> {
-  List<ListUsersModel> _listUser = [];
-  TextEditingController _saldoController = TextEditingController();
+  final TextEditingController _saldoController = TextEditingController();
   final _transaksi = Transaksi();
   SharedPrefs sharedPrefs = SharedPrefs();
   String userId = "";

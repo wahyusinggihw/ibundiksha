@@ -60,7 +60,7 @@ class MyNotificationService {
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': messaging_API
+            'Authorization': messagingAPIKey
           },
         ),
         data: jsonEncode(

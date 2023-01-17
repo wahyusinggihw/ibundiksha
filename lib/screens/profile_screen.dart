@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:ibundiksha/router/route_list.dart';
+import 'package:ibundiksha/services/auth_services.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -18,10 +21,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String nama = '';
   String username = '';
   String saldo = '';
+  final _auth = Auth();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     nama = sharedPrefs.getString('nama');
     username = sharedPrefs.getString('username');
@@ -56,8 +59,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             splashRadius: 20,
             icon: const Icon(Icons.logout),
             onPressed: () {
-              // Dialogs().showAlertDialog(
-              //     context, 'Logout', 'Anda yakin ingin logout?', '/login');
+              showDialog(
+                context: context,
+                builder: (context) => myDialog(
+                    context: context,
+                    title: "Konfirmasi",
+                    message: "Anda yakin ingin logout?",
+                    onPressed: () async {
+                      var status = await _auth.logoutService();
+                      if (status.isLoggedIn == false) {
+                        if (kDebugMode) {
+                          print('User logged out');
+                        }
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, routeLoginScreen, (route) => false);
+                      }
+                    }),
+              );
             },
           ),
         ],
@@ -148,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).size.height * 0.1),

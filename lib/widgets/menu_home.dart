@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -97,8 +96,10 @@ class MenuHome {
           onTap: () {
             Navigator.pushNamed(context, routeScreen);
             active = title;
-            print("aktif sekarang " + active);
-            print(routeScreen);
+            if (kDebugMode) {
+              print("aktif sekarang $active");
+              print(routeScreen);
+            }
           },
         ),
       ),
@@ -120,7 +121,7 @@ class MenuHome {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),

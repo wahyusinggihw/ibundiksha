@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import "package:dio/dio.dart";
+import 'package:flutter/foundation.dart';
 import 'package:ibundiksha/models/current_user_model.dart';
-import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 
 class Auth {
@@ -39,7 +36,7 @@ class Auth {
       );
 
       var data = response.data;
-      print(response.statusCode);
+      // print(response.statusCode);
 
       if (response.statusCode == 200) {
         double? saldo = double.parse(data[0]['saldo']);
@@ -65,10 +62,14 @@ class Auth {
 
         return currentUserData;
       } else if (response.statusCode == 404) {
-        print('Login error');
+        if (kDebugMode) {
+          print('Login error');
+        }
       }
     } on DioError catch (error, stacktrace) {
-      print('Login error');
+      if (kDebugMode) {
+        print('Login error');
+      }
       // print('Exception occured: $error stackTrace: $stacktrace');
       // throw Exception(error.response);
       CurrentUserModel currentUserData = CurrentUserModel(

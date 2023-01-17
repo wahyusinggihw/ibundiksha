@@ -8,7 +8,7 @@ Widget about(BuildContext context, String title) {
     child: Center(
       child: Text(
         title,
-        style: TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 14),
       ),
     ),
   );

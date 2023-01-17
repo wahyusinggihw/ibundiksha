@@ -17,7 +17,6 @@ import 'package:ibundiksha/screens/qrscanner_result_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/screens/transfer_detail_screen.dart';
 import 'package:ibundiksha/screens/transfer_screen.dart';
-import 'package:push_notification/push_notification.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -106,25 +105,25 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
         debugShowCheckedModeBanner: false,
-        title: "Koperasi Undiksha",
-        initialRoute: isLoggedIn == true ? routeMainScreen : routeLoginScreen,
+        title: "Internet Banking Undiksha",
+        initialRoute: isLoggedIn == true ? routeMainScreen : routeSplashScreen,
         // onGenerateRoute: RouterGenerator.generateRoute,
         routes: {
-          noRoute: (context) => NoRouteScreen(),
-          routeSplashScreen: (context) => SplashScreen(),
-          routeMainScreen: (context) => BottomBar(),
-          routeLoginScreen: (context) => LoginScreen(),
-          routeRegisterScreen: (context) => RegisterScreen(),
-          routeHomeScreen: (context) => HomeScreen(),
+          noRoute: (context) => const NoRouteScreen(),
+          routeSplashScreen: (context) => const SplashScreen(),
+          routeMainScreen: (context) => const BottomBar(),
+          routeLoginScreen: (context) => const LoginScreen(),
+          routeRegisterScreen: (context) => const RegisterScreen(),
+          routeHomeScreen: (context) => const HomeScreen(),
           // routeQRScanner: (context) => QrScanner(),
-          routeQrScannerResult: (context) => QrScannerResult(),
-          routeProfileScreen: (context) => ProfileScreen(),
-          routeSaldoScreen: (context) => SaldoScreen(),
-          routeTransferScreen: (context) => TransferScreen(),
-          routeTransferDetailScreen: (context) => TransferDetailScreen(),
-          routeTarikScreen: (context) => TarikScreen(),
-          routePembayaranScreen: (context) => PembayaranScreen(),
-          routeSetoranScreen: (context) => SetoranScreen(),
+          routeQrScannerResult: (context) => const QrScannerResult(),
+          routeProfileScreen: (context) => const ProfileScreen(),
+          routeSaldoScreen: (context) => const SaldoScreen(),
+          routeTransferScreen: (context) => const TransferScreen(),
+          routeTransferDetailScreen: (context) => const TransferDetailScreen(),
+          routeTarikScreen: (context) => const TarikScreen(),
+          routePembayaranScreen: (context) => const PembayaranScreen(),
+          routeSetoranScreen: (context) => const SetoranScreen(),
         });
   }
 }

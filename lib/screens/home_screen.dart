@@ -1,12 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/models/current_user_model.dart';
-import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/widgets/list_menu.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
-import 'package:ibundiksha/widgets/dialogs.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
-import 'package:ibundiksha/services/auth_services.dart';
 import 'package:ibundiksha/services/notif_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,11 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   MyNotificationService myNotificationService = MyNotificationService();
   String nama = '';
   String saldo = '';
-  final _auth = Auth();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     nama = sharedPrefs.getString('nama');
     myNotificationService.getToken();
@@ -41,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Koperasi Undiksha'),
+        title: const Text('Internet Banking Undiksha'),
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -60,20 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {},
               child: const Text("Logout"),
             ),
-          ),
-          IconButton(
-            splashRadius: 20,
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              var status = await _auth.logoutService();
-              if (status.isLoggedIn == false) {
-                print('User logged out');
-                Navigator.pushNamedAndRemoveUntil(
-                    context, routeLoginScreen, (route) => false);
-              }
-              // Dialogs().showAlertDialog(
-              //     context, 'Logout', 'Anda yakin ingin logout?', '/login');
-            },
           ),
         ],
       ),
@@ -189,7 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
             LayoutBuilder(
               builder: (context, constraints) {
                 if (constraints.maxWidth > 450) {
-                  print("lebih 450");
+                  if (kDebugMode) {
+                    print("lebih 450");
+                  }
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: mainWideContainer(

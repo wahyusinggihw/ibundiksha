@@ -105,8 +105,8 @@ class _BottomBarState extends State<BottomBar> {
               behavior: SnackBarBehavior.floating,
               dismissDirection: DismissDirection.horizontal,
               backgroundColor: Colors.red,
-              duration: Duration(seconds: 2),
-              content: Text(
+              duration: const Duration(seconds: 2),
+              content: const Text(
                 "Nomor rekening tidak ditemukan",
               ),
               margin: EdgeInsets.only(

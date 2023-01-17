@@ -1,11 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/widgets/snackbars.dart';
 import '../widgets/menu_home.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/services/auth_services.dart';
-import 'package:ibundiksha/widgets/dialogs.dart';
-import 'package:ibundiksha/services/shared_preferences.dart';
 
 class RegisterWideLayout extends StatefulWidget {
   const RegisterWideLayout({Key? key}) : super(key: key);
@@ -27,11 +28,6 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
   @override
   Widget build(BuildContext context) {
     var mainWideContainer = MenuHome.mainWideContainer;
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.height;
-    // var mainContainer = MenuHome.mainContainer;
-    var loginService = Auth().loginService;
-    var snackBarCustom = Dialogs().snackBarCustom;
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -48,7 +44,7 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
               width: 200,
               height: 200,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Form(
               key: _formKey,
               child: Padding(
@@ -61,81 +57,72 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
                           child: Text("Username"),
                         ),
-                        Container(
-                          // height: 50,
-                          child: TextFormField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Username cant empty";
-                              }
-                              return null;
-                            },
+                        TextFormField(
+                          controller: _usernameController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Username cant empty";
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
                           child: Text("Password"),
                         ),
-                        Container(
-                          // height: 60,
-                          child: TextFormField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              suffixIcon: _isObscure
-                                  ? IconButton(
-                                      icon: Icon(Icons.visibility_off),
-                                      onPressed: () {
-                                        setState(() {
-                                          _isObscure = false;
-                                        });
-                                      },
-                                    )
-                                  : IconButton(
-                                      icon: Icon(Icons.visibility),
-                                      onPressed: () {
-                                        setState(() {
-                                          _isObscure = true;
-                                        });
-                                      },
-                                    ),
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Password cant empty";
-                              }
-                              return null;
-                            },
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            suffixIcon: _isObscure
+                                ? IconButton(
+                                    icon: const Icon(Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure = false;
+                                      });
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: const Icon(Icons.visibility),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure = true;
+                                      });
+                                    },
+                                  ),
+                            border: const OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Password cant empty";
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
                           child: Text("Password"),
                         ),
-                        Container(
-                          // height: 60,
-                          child: TextFormField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Password cant empty";
-                              }
-                              return null;
-                            },
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Password cant empty";
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 10),
                         Center(
@@ -161,53 +148,25 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
                                     nim: _nimController.text.substring(7),
                                     password: _passwordController.text);
                                 if (status!.isLoggedIn == true) {
-                                  var loginSuccess = SnackBar(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    behavior: SnackBarBehavior.floating,
-                                    dismissDirection:
-                                        DismissDirection.horizontal,
-                                    backgroundColor: Colors.blue,
-                                    duration: Duration(seconds: 2),
-                                    content: Text(
-                                      "Register Success\nSigned in as ${_usernameController.text}",
-                                    ),
-                                    // margin: EdgeInsets.only(
-                                    //     bottom:
-                                    //         MediaQuery.of(context).size.height -
-                                    //             160,
-                                    //     right: 20,
-                                    //     left: 20),
-                                  );
-                                  print("success");
+                                  var loginSuccess = successSnackBar(
+                                      "Register Success\nSigned in as ${_usernameController.text}");
+                                  if (kDebugMode) {
+                                    print("Register success");
+                                  }
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(loginSuccess);
                                   Navigator.pushNamedAndRemoveUntil(
                                       context, '/main', (route) => false);
                                 } else {
-                                  var loginFailed = SnackBar(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    behavior: SnackBarBehavior.floating,
-                                    dismissDirection:
-                                        DismissDirection.horizontal,
-                                    backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 2),
-                                    content: Text(
-                                      "Register failed",
-                                    ),
-                                    // margin: EdgeInsets.only(
-                                    //     bottom:
-                                    //         MediaQuery.of(context).size.height -
-                                    //             160,
-                                    //     right: 20,
-                                    //     left: 20),
-                                  );
+                                  var loginFailed =
+                                      errorSnackBar("Register failed");
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(loginFailed);
+                                  if (kDebugMode) {
+                                    print("Register failed");
+                                  }
                                 }
                               }
-                              // Navigator.pushNamed(context, '/main');
                             },
                           ),
                         ),
@@ -219,15 +178,8 @@ class _RegisterWideLayoutState extends State<RegisterWideLayout> {
                                 Navigator.popAndPushNamed(
                                     context, routeLoginScreen);
                               },
-                              child: Text('Login Mbanking'),
+                              child: const Text('Login Mbanking'),
                             ),
-                            // Spacer(),
-                            // TextButton(
-                            //   onPressed: () {
-                            //     // Navigator.pushNamed(context, '/register');
-                            //   },
-                            //   child: Text('lupa password?'),
-                            // ),
                           ],
                         ),
                       ],

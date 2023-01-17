@@ -2,8 +2,6 @@
 //
 //     final welcome = welcomeFromJson(jsonString);
 
-import 'dart:convert';
-
 class SingleUserModel {
   SingleUserModel({
     this.userId,

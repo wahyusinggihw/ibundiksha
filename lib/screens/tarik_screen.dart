@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/services/list_users_service.dart';
-import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
+import 'package:ibundiksha/widgets/snackbars.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
 class TarikScreen extends StatefulWidget {
@@ -14,8 +15,7 @@ class TarikScreen extends StatefulWidget {
 }
 
 class _TarikScreenState extends State<TarikScreen> {
-  List<ListUsersModel> _listUser = [];
-  TextEditingController _saldoController = TextEditingController();
+  final TextEditingController _saldoController = TextEditingController();
   final _transaksi = Transaksi();
   final _formKey = GlobalKey<FormState>();
   SharedPrefs sharedPrefs = SharedPrefs();
@@ -25,22 +25,14 @@ class _TarikScreenState extends State<TarikScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print(sharedPrefs.getBool('isLoggedIn'));
+    // print(sharedPrefs.getBool('isLoggedIn'));
     saldo = sharedPrefs.getString('saldo');
     userId = sharedPrefs.getString('userId');
   }
 
-  //2. buat fungsi get data user
-
   @override
   Widget build(BuildContext context) {
-    // String active = "Transaksi";
-    // String activeScreen = MenuHome.active;
-
-    dynamic dataTransaksi = ModalRoute.of(context)!.settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
@@ -52,7 +44,7 @@ class _TarikScreenState extends State<TarikScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Tarik Tunai"),
+        title: const Text("Tarik Tunai"),
       ),
       body: SafeArea(
         child: Padding(
@@ -66,7 +58,7 @@ class _TarikScreenState extends State<TarikScreen> {
               Row(
                 children: [
                   const Text("Rp. "),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(saldo),
                   ),
@@ -79,7 +71,7 @@ class _TarikScreenState extends State<TarikScreen> {
                 children: [
                   const SizedBox(height: 10),
                   const Text("Rp. "),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Form(
                       key: _formKey,
@@ -107,28 +99,11 @@ class _TarikScreenState extends State<TarikScreen> {
                   minWidth: MediaQuery.of(context).size.width - 20,
                   child: ElevatedButton(
                     onPressed: () async {
-                      // print(userId);
-                      //  validator
                       if (_formKey.currentState!.validate()) {
                         if (double.parse(saldo) <
                             double.parse(_saldoController.text)) {
                           // snackbar
-                          var snackbar = SnackBar(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            behavior: SnackBarBehavior.floating,
-                            dismissDirection: DismissDirection.horizontal,
-                            backgroundColor: Colors.red,
-                            duration: Duration(seconds: 2),
-                            content: const Text(
-                              "Saldo tidak cukup",
-                            ),
-                            margin: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height - 160,
-                                right: 20,
-                                left: 20),
-                          );
+                          var snackbar = errorSnackBar("Saldo tidak mencukupi");
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         } else {
                           var data = await _transaksi.tarikanService(
@@ -138,42 +113,13 @@ class _TarikScreenState extends State<TarikScreen> {
 
                           if (data['status'] == 'success') {
                             // snackbar
-                            var snackbar = SnackBar(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              behavior: SnackBarBehavior.floating,
-                              dismissDirection: DismissDirection.horizontal,
-                              backgroundColor: Colors.blue,
-                              duration: Duration(seconds: 2),
-                              content: const Text(
-                                "Tarik tunai berhasil",
-                              ),
-                              // margin: EdgeInsets.only(
-                              //     bottom:
-                              //         MediaQuery.of(context).size.height - 160,
-                              //     right: 20,
-                              //     left: 20),
-                            );
+                            var snackbar =
+                                successSnackBar("Tarik tunai berhasil");
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);
                           } else {
                             // snackbar
-                            var snackbar = SnackBar(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              behavior: SnackBarBehavior.floating,
-                              dismissDirection: DismissDirection.horizontal,
-                              backgroundColor: Colors.red,
-                              duration: Duration(seconds: 2),
-                              content: const Text(
-                                "Tarik tunai gagal",
-                              ),
-                              // margin: EdgeInsets.only(
-                              //     bottom:
-                              //         MediaQuery.of(context).size.height - 160,
-                              //     right: 20,
-                              //     left: 20),
-                            );
+                            var snackbar = errorSnackBar("Tarik tunai gagal");
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);
                           }
@@ -184,40 +130,11 @@ class _TarikScreenState extends State<TarikScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             ],
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, '/add');
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
-}
-
-Widget cardlist(
-    String title, String subtitle, Color color, String nilai, Color bgColor) {
-  return Card(
-    color: bgColor,
-    child: ListTile(
-      title: Text(title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-      subtitle: Text(subtitle),
-      trailing: Container(
-        height: 50,
-        width: 50,
-        color: color,
-        child: Center(
-          child: Text(nilai,
-              style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold)),
-        ),
-      ),
-    ),
-  );
 }

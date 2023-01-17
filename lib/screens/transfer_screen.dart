@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
+import 'package:ibundiksha/widgets/snackbars.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
 class TransferScreen extends StatefulWidget {
@@ -13,7 +15,8 @@ class TransferScreen extends StatefulWidget {
 }
 
 class _TransferScreenState extends State<TransferScreen> {
-  TextEditingController _nomorRekeningController = TextEditingController();
+  final TextEditingController _nomorRekeningController =
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
   //2. buat fungsi get data user
   List<ListUsersModel> _listUser = [];
@@ -62,7 +65,7 @@ class _TransferScreenState extends State<TransferScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Form(
@@ -105,23 +108,12 @@ class _TransferScreenState extends State<TransferScreen> {
                       }
                     }
                     if (!userExist) {
-                      var notExits = SnackBar(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        behavior: SnackBarBehavior.floating,
-                        dismissDirection: DismissDirection.horizontal,
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 2),
-                        content: Text(
-                          "Nomor rekening tidak ditemukan",
-                        ),
-                        // margin: EdgeInsets.only(
-                        //     bottom: MediaQuery.of(context).size.height - 150,
-                        //     right: 20,
-                        //     left: 20),
-                      );
+                      var notExits =
+                          errorSnackBar("Nomor rekening tidak ditemukan");
                       ScaffoldMessenger.of(context).showSnackBar(notExits);
-                      print('Nomor rekening tidak ditemukan');
+                      if (kDebugMode) {
+                        print('Nomor rekening tidak ditemukan');
+                      }
                     } else {
                       Navigator.pushNamed(context, routeTransferDetailScreen,
                           arguments: {
@@ -154,7 +146,7 @@ Widget cardlist(
     color: bgColor,
     child: ListTile(
       title: Text(title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
       subtitle: Text(subtitle),
       trailing: Container(
         height: 50,
@@ -162,7 +154,7 @@ Widget cardlist(
         color: color,
         child: Center(
           child: Text(nilai,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 25,
                   color: Colors.white,
                   fontWeight: FontWeight.bold)),

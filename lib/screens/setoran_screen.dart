@@ -1,6 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/services/list_users_service.dart';
-import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
@@ -14,8 +14,8 @@ class SetoranScreen extends StatefulWidget {
 }
 
 class _SetoranScreenState extends State<SetoranScreen> {
-  List<ListUsersModel> _listUser = [];
-  TextEditingController _saldoController = TextEditingController();
+  // List<ListUsersModel> _listUser = [];
+  final TextEditingController _saldoController = TextEditingController();
   final _transaksi = Transaksi();
   final _formKey = GlobalKey<FormState>();
   SharedPrefs sharedPrefs = SharedPrefs();
@@ -25,21 +25,13 @@ class _SetoranScreenState extends State<SetoranScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     saldo = sharedPrefs.getString('saldo');
     userId = sharedPrefs.getString('userId');
   }
 
-  //2. buat fungsi get data user
-
   @override
   Widget build(BuildContext context) {
-    // String active = "Transaksi";
-    // String activeScreen = MenuHome.active;
-
-    dynamic dataTransaksi = ModalRoute.of(context)!.settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
@@ -65,7 +57,7 @@ class _SetoranScreenState extends State<SetoranScreen> {
               Row(
                 children: [
                   const Text("Rp. "),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(saldo),
                   ),
@@ -78,7 +70,7 @@ class _SetoranScreenState extends State<SetoranScreen> {
                 children: [
                   const SizedBox(height: 10),
                   const Text("Rp. "),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Form(
                       key: _formKey,
@@ -121,7 +113,7 @@ class _SetoranScreenState extends State<SetoranScreen> {
                             behavior: SnackBarBehavior.floating,
                             dismissDirection: DismissDirection.horizontal,
                             backgroundColor: Colors.blue,
-                            duration: Duration(seconds: 2),
+                            duration: const Duration(seconds: 2),
                             content: const Text(
                               "Setor tunai berhasil",
                             ),
@@ -140,7 +132,7 @@ class _SetoranScreenState extends State<SetoranScreen> {
                             behavior: SnackBarBehavior.floating,
                             dismissDirection: DismissDirection.horizontal,
                             backgroundColor: Colors.red,
-                            duration: Duration(seconds: 2),
+                            duration: const Duration(seconds: 2),
                             content: const Text(
                               "Setor tunai gagal",
                             ),
@@ -154,10 +146,11 @@ class _SetoranScreenState extends State<SetoranScreen> {
                         }
                       }
                     },
-                    child: const Text("Tambah"),
+                    child: const Text("Setor Tunai"),
                   ),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             ],
           ),
         ),
@@ -178,7 +171,7 @@ Widget cardlist(
     color: bgColor,
     child: ListTile(
       title: Text(title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
       subtitle: Text(subtitle),
       trailing: Container(
         height: 50,
@@ -186,7 +179,7 @@ Widget cardlist(
         color: color,
         child: Center(
           child: Text(nilai,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 25,
                   color: Colors.white,
                   fontWeight: FontWeight.bold)),

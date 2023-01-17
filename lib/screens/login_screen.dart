@@ -15,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Koperasi Undiksha'),
+        title: const Text('Internet Banking Undiksha'),
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,
