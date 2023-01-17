@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ibundiksha/services/secret.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
@@ -59,8 +60,7 @@ class MyNotificationService {
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            'Authorization':
-                'key=AAAAjKyKvQY:APA91bGRDJNRUlwAPhMMeOCrAdcQB8qj-3ZbsjDOY4gAaGBd3ho4dHi73uBb22IFMP4sevEpxwNpbFJSu-BgahD32XclWw1REbEntL53L1SuubpmpqSxbFRTb2uAyRgVqkMP_9q8jD6n'
+            'Authorization': messaging_API
           },
         ),
         data: jsonEncode(
