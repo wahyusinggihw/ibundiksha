@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "604190194950",
+    "project_id": "ibundiksha",
+    "storage_bucket": "ibundiksha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604190194950:android:5e98cc03af5734853c3287",
+        "android_client_info": {
+          "package_name": "com.example.ibundiksha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604190194950-keehaprgu1c6tvvrcl4jpsh7a65bu3ck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ibundiksha",
+            "certificate_hash": "e781d134bb43b6656c540ba067acd776797e4893"
+          }
+        },
+        {
+          "client_id": "604190194950-tn2h5fodqmb1r8foc6kaj70g8mmdfsmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACaIZ_4MsFDY4XbZf6MnspEs4FYZ9SKrI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604190194950-tn2h5fodqmb1r8foc6kaj70g8mmdfsmi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604190194950-2skao90200f6bfh5ncle70polufskbdm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ibundiksha"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
