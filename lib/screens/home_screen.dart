@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/widgets/list_menu.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -17,19 +18,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   SharedPrefs sharedPrefs = SharedPrefs();
   MyNotificationService myNotificationService = MyNotificationService();
+  final Transaksi _transaksi = Transaksi();
   String nama = '';
   String saldo = '';
+  String currentUserId = '';
 
   @override
   void initState() {
     super.initState();
     nama = sharedPrefs.getString('nama');
+    currentUserId = sharedPrefs.getString('userId');
     myNotificationService.getToken();
+    _transaksi.currentUserSaldo(userId: int.parse(currentUserId)).then((value) {
+      setState(() {
+        saldo = value[0]['saldo'];
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     saldo = sharedPrefs.getString('saldo');
+
     var menuGrid = MenuHome().menuGrid;
     var bioBox = MenuHome.bioBox;
     var mainContainer = MenuHome.mainContainer;

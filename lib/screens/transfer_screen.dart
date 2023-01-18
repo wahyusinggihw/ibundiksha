@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
+import 'package:ibundiksha/screens/home_screen.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
+import 'package:ibundiksha/widgets/bottombar.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
 import 'package:ibundiksha/widgets/snackbars.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
@@ -54,8 +56,12 @@ class _TransferScreenState extends State<TransferScreen> {
         // automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
+          onPressed: () async {
+            var data = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BottomBar()),
+            );
+            Navigator.pop(context, data);
           },
         ),
         title: const Text("Transfer"),

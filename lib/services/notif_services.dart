@@ -25,18 +25,26 @@ class MyNotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      if (kDebugMode) {
+        print('User granted permission');
+      }
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
+      if (kDebugMode) {
+        print('User granted provisional permission');
+      }
     } else {
-      print('User declined or has not accepted permission');
+      if (kDebugMode) {
+        print('User declined or has not accepted permission');
+      }
     }
   }
 
   void getToken() async {
     await FirebaseMessaging.instance.getToken().then((value) {
-      print('token: $value');
+      if (kDebugMode) {
+        print('token: $value');
+      }
       saveToken(value);
     });
   }

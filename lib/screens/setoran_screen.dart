@@ -1,9 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/screens/home_screen.dart';
 import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/widgets/bottombar.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
+import 'package:ibundiksha/widgets/snackbars.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
 
 class SetoranScreen extends StatefulWidget {
@@ -20,18 +23,18 @@ class _SetoranScreenState extends State<SetoranScreen> {
   final _formKey = GlobalKey<FormState>();
   SharedPrefs sharedPrefs = SharedPrefs();
   String saldo = '';
-  String userId = '';
+  String currentUserId = '';
   MyStyle myStyle = MyStyle();
 
   @override
   void initState() {
     super.initState();
-    saldo = sharedPrefs.getString('saldo');
-    userId = sharedPrefs.getString('userId');
+    currentUserId = sharedPrefs.getString('userId');
   }
 
   @override
   Widget build(BuildContext context) {
+    saldo = sharedPrefs.getString('saldo');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
@@ -39,8 +42,12 @@ class _SetoranScreenState extends State<SetoranScreen> {
         // automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
+          onPressed: () async {
+            var data = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BottomBar()),
+            );
+            Navigator.pop(context, data);
           },
         ),
         title: const Text("Setor tunai"),
@@ -102,46 +109,25 @@ class _SetoranScreenState extends State<SetoranScreen> {
                       //  validator
                       if (_formKey.currentState!.validate()) {
                         var data = await _transaksi.setoranService(
-                            userId: int.parse(userId),
+                            userId: int.parse(currentUserId),
                             jumlahSetoran: double.parse(_saldoController.text));
 
                         if (data['status'] == 'success') {
                           // snackbar
-                          var snackbar = SnackBar(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            behavior: SnackBarBehavior.floating,
-                            dismissDirection: DismissDirection.horizontal,
-                            backgroundColor: Colors.blue,
-                            duration: const Duration(seconds: 2),
-                            content: const Text(
-                              "Setor tunai berhasil",
-                            ),
-                            margin: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height - 160,
-                                right: 20,
-                                left: 20),
-                          );
+                          var snackbar =
+                              successSnackBar("Setor tunai berhasil");
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                          _transaksi
+                              .currentUserSaldo(
+                                  userId: int.parse(currentUserId))
+                              .then((value) {
+                            setState(() {
+                              saldo = value[0]['saldo'];
+                            });
+                          });
                         } else {
                           // snackbar
-                          var snackbar = SnackBar(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            behavior: SnackBarBehavior.floating,
-                            dismissDirection: DismissDirection.horizontal,
-                            backgroundColor: Colors.red,
-                            duration: const Duration(seconds: 2),
-                            content: const Text(
-                              "Setor tunai gagal",
-                            ),
-                            margin: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height - 160,
-                                right: 20,
-                                left: 20),
-                          );
+                          var snackbar = errorSnackBar("Setor tunai gagal");
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         }
                       }

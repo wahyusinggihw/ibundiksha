@@ -1,4 +1,5 @@
 import "package:dio/dio.dart";
+import 'package:flutter/foundation.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/services/notif_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,8 +23,8 @@ class Transaksi {
       );
       var data = response.data;
       if (response.statusCode == 200) {
-        double? saldo = double.parse(data[0]['saldo']);
-        sharedPrefs.addString('saldo', saldo.toString());
+        // double? saldo = double.parse(data[0]['saldo']);
+        // sharedPrefs.addString('saldo', saldo.toString());
       } else {
         print('failed');
       }
@@ -63,7 +64,9 @@ class Transaksi {
             .then((DocumentSnapshot doc) {
           final dbData = doc.data() as Map<String, dynamic>;
           token = dbData['token'];
-          print('token di firestore: $token');
+          if (kDebugMode) {
+            print('token di firestore: $token');
+          }
         });
 
         notifService.sendPushNotification(

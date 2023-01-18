@@ -124,7 +124,7 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                         onPressed: () async {
                           //  validator
                           if (_formKey.currentState!.validate()) {
-                            if (double.parse(sharedPrefs.getString('saldo')) <
+                            if (double.parse(saldo) <
                                 double.parse(_jumlahTransferController.text)) {
                               // snackbar
                               var snackbar =
@@ -145,10 +145,16 @@ class _TransferDetailScreenState extends State<TransferDetailScreen> {
                                     successSnackBar("Transfer berhasil");
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackbar);
-                                setState(() {
-                                  _transaksi.currentUserSaldo(
-                                      userId: int.parse(currentUserId));
-                                  saldo = sharedPrefs.getString('saldo');
+                                // setState(() {
+                                //   saldo = sharedPrefs.getString('saldo');
+                                // });
+                                _transaksi
+                                    .currentUserSaldo(
+                                        userId: int.parse(currentUserId))
+                                    .then((value) {
+                                  setState(() {
+                                    saldo = value[0]['saldo'];
+                                  });
                                 });
                               } else {
                                 // snackbar

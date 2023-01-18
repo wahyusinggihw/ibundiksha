@@ -1,8 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:ibundiksha/screens/home_screen.dart';
 import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/widgets/bottombar.dart';
 import 'package:ibundiksha/widgets/my_style.dart';
 import 'package:ibundiksha/widgets/snackbars.dart';
 // import 'package:ibundiksha/widgets/menu_home.dart';
@@ -20,19 +22,24 @@ class _TarikScreenState extends State<TarikScreen> {
   final _formKey = GlobalKey<FormState>();
   SharedPrefs sharedPrefs = SharedPrefs();
   String saldo = '';
-  String userId = '';
+  String currentUserId = '';
   MyStyle myStyle = MyStyle();
 
   @override
   void initState() {
     super.initState();
-    // print(sharedPrefs.getBool('isLoggedIn'));
+    currentUserId = sharedPrefs.getString('userId');
+  }
+
+  getSaldo() {
     saldo = sharedPrefs.getString('saldo');
-    userId = sharedPrefs.getString('userId');
+    return saldo;
   }
 
   @override
   Widget build(BuildContext context) {
+    saldo = sharedPrefs.getString('saldo');
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
@@ -40,8 +47,12 @@ class _TarikScreenState extends State<TarikScreen> {
         // automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
+          onPressed: () async {
+            var data = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BottomBar()),
+            );
+            Navigator.pop(context, data);
           },
         ),
         title: const Text("Tarik Tunai"),
@@ -107,9 +118,11 @@ class _TarikScreenState extends State<TarikScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         } else {
                           var data = await _transaksi.tarikanService(
-                              userId: int.parse(userId),
+                              userId: int.parse(currentUserId),
                               jumlahTarikan:
                                   double.parse(_saldoController.text));
+
+                          var saldo = await getSaldo();
 
                           if (data['status'] == 'success') {
                             // snackbar
@@ -117,6 +130,14 @@ class _TarikScreenState extends State<TarikScreen> {
                                 successSnackBar("Tarik tunai berhasil");
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackbar);
+                            _transaksi
+                                .currentUserSaldo(
+                                    userId: int.parse(currentUserId))
+                                .then((value) {
+                              setState(() {
+                                saldo = value[0]['saldo'];
+                              });
+                            });
                           } else {
                             // snackbar
                             var snackbar = errorSnackBar("Tarik tunai gagal");
