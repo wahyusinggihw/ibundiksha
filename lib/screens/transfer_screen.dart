@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
-import 'package:ibundiksha/screens/home_screen.dart';
 import 'package:ibundiksha/services/list_users_service.dart';
 import 'package:ibundiksha/models/list_users_model.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
@@ -49,99 +48,109 @@ class _TransferScreenState extends State<TransferScreen> {
     // String active = "Transaksi";
     // String activeScreen = MenuHome.active;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.cyan,
-        centerTitle: true,
-        // automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () async {
-            var data = await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const BottomBar()),
-            );
-            Navigator.pop(context, data);
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        var data = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BottomBar()),
+        );
+        Navigator.pop(context, data);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.cyan,
+          centerTitle: true,
+          // automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              var data = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BottomBar()),
+              );
+              Navigator.pop(context, data);
+            },
+          ),
+          title: const Text("Transfer"),
         ),
-        title: const Text("Transfer"),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Masukkan nomor rekening tujuan",
-                      style: MyStyle().h1Style(),
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: _nomorRekeningController,
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.account_balance_wallet),
-                        labelText: "Nomor Rekening",
-                        hintText: "Masukkan Nomor Rekening",
-                      ),
-                      validator: (value) => value!.isEmpty
-                          ? "Nomor rekening tidak boleh kosong"
-                          : null,
-                    ),
-                  ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    for (var i = 0; i < _listUser.length; i++) {
-                      if (_listUser[i].nomorRekening ==
-                          _nomorRekeningController.text) {
-                        userExist = true;
-                        nama = _listUser[i].nama!;
-                        nomorRekening = _listUser[i].nomorRekening!;
-                        break;
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Masukkan nomor rekening tujuan",
+                        style: MyStyle().h1Style(),
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: _nomorRekeningController,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.account_balance_wallet),
+                          labelText: "Nomor Rekening",
+                          hintText: "Masukkan Nomor Rekening",
+                        ),
+                        validator: (value) => value!.isEmpty
+                            ? "Nomor rekening tidak boleh kosong"
+                            : null,
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      for (var i = 0; i < _listUser.length; i++) {
+                        if (_listUser[i].nomorRekening ==
+                            _nomorRekeningController.text) {
+                          userExist = true;
+                          nama = _listUser[i].nama!;
+                          nomorRekening = _listUser[i].nomorRekening!;
+                          break;
+                        } else {
+                          userExist = false;
+                        }
+                      }
+                      if (!userExist) {
+                        var notExits =
+                            errorSnackBar("Nomor rekening tidak ditemukan");
+                        ScaffoldMessenger.of(context).showSnackBar(notExits);
+                        if (kDebugMode) {
+                          print('Nomor rekening tidak ditemukan');
+                        }
                       } else {
-                        userExist = false;
+                        Navigator.pushNamed(context, routeTransferDetailScreen,
+                            arguments: {
+                              'nomorRekening': _nomorRekeningController.text,
+                              'nama': nama,
+                            });
                       }
                     }
-                    if (!userExist) {
-                      var notExits =
-                          errorSnackBar("Nomor rekening tidak ditemukan");
-                      ScaffoldMessenger.of(context).showSnackBar(notExits);
-                      if (kDebugMode) {
-                        print('Nomor rekening tidak ditemukan');
-                      }
-                    } else {
-                      Navigator.pushNamed(context, routeTransferDetailScreen,
-                          arguments: {
-                            'nomorRekening': _nomorRekeningController.text,
-                            'nama': nama,
-                          });
-                    }
-                  }
-                },
-                child: const Text("Lanjutkan"),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-            ],
+                  },
+                  child: const Text("Lanjutkan"),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              ],
+            ),
           ),
         ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.pushNamed(context, '/add');
+        //   },
+        //   child: const Icon(Icons.add),
+        // ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, '/add');
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }

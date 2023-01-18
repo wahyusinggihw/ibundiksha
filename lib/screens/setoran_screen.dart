@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:ibundiksha/screens/home_screen.dart';
 import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
 import 'package:ibundiksha/widgets/bottombar.dart';
@@ -35,118 +34,131 @@ class _SetoranScreenState extends State<SetoranScreen> {
   @override
   Widget build(BuildContext context) {
     saldo = sharedPrefs.getString('saldo');
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.cyan,
-        centerTitle: true,
-        // automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () async {
-            var data = await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const BottomBar()),
-            );
-            Navigator.pop(context, data);
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        var data = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BottomBar()),
+        );
+        Navigator.pop(context, data);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.cyan,
+          centerTitle: true,
+          // automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              var data = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BottomBar()),
+              );
+              Navigator.pop(context, data);
+            },
+          ),
+          title: const Text("Setor tunai"),
         ),
-        title: const Text("Setor tunai"),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Text("Saldo anda", style: MyStyle().h1Style()),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  const Text("Rp. "),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: Text(saldo),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text("Masukkan nominal", style: MyStyle().h1Style()),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  const SizedBox(height: 10),
-                  const Text("Rp. "),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _saldoController,
-                        decoration: const InputDecoration(
-                            // border: OutlineInputBorder(),
-                            ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Nominal harus diisi";
-                          }
-                          return null;
-                        },
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text("Saldo anda", style: MyStyle().h1Style()),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Text("Rp. "),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Text(saldo),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Text("Masukkan nominal", style: MyStyle().h1Style()),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const SizedBox(height: 10),
+                    const Text("Rp. "),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: _saldoController,
+                          decoration: const InputDecoration(
+                              // border: OutlineInputBorder(),
+                              ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Nominal harus diisi";
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: ButtonTheme(
-                  minWidth: MediaQuery.of(context).size.width - 20,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      // print(userId);
-                      //  validator
-                      if (_formKey.currentState!.validate()) {
-                        var data = await _transaksi.setoranService(
-                            userId: int.parse(currentUserId),
-                            jumlahSetoran: double.parse(_saldoController.text));
+                  ],
+                ),
+                const Spacer(),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: ButtonTheme(
+                    minWidth: MediaQuery.of(context).size.width - 20,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        // print(userId);
+                        //  validator
+                        if (_formKey.currentState!.validate()) {
+                          var data = await _transaksi.setoranService(
+                              userId: int.parse(currentUserId),
+                              jumlahSetoran:
+                                  double.parse(_saldoController.text));
 
-                        if (data['status'] == 'success') {
-                          // snackbar
-                          var snackbar =
-                              successSnackBar("Setor tunai berhasil");
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                          _transaksi
-                              .currentUserSaldo(
-                                  userId: int.parse(currentUserId))
-                              .then((value) {
-                            setState(() {
-                              saldo = value[0]['saldo'];
+                          if (data['status'] == 'success') {
+                            // snackbar
+                            var snackbar =
+                                successSnackBar("Setor tunai berhasil");
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
+                            _transaksi
+                                .currentUserSaldo(
+                                    userId: int.parse(currentUserId))
+                                .then((value) {
+                              setState(() {
+                                saldo = value[0]['saldo'];
+                              });
                             });
-                          });
-                        } else {
-                          // snackbar
-                          var snackbar = errorSnackBar("Setor tunai gagal");
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                          } else {
+                            // snackbar
+                            var snackbar = errorSnackBar("Setor tunai gagal");
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
+                          }
                         }
-                      }
-                    },
-                    child: const Text("Setor Tunai"),
+                      },
+                      child: const Text("Setor Tunai"),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-            ],
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              ],
+            ),
           ),
         ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.pushNamed(context, '/add');
+        //   },
+        //   child: const Icon(Icons.add),
+        // ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, '/add');
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
