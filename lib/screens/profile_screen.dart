@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ibundiksha/router/route_list.dart';
 import 'package:ibundiksha/services/auth_services.dart';
 import 'package:ibundiksha/services/shared_preferences.dart';
+import 'package:ibundiksha/services/transaksi_service.dart';
 import 'package:ibundiksha/widgets/menu_home.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ibundiksha/widgets/dialogs.dart';
@@ -18,8 +19,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   SharedPrefs sharedPrefs = SharedPrefs();
+  final Transaksi _transaksi = Transaksi();
   String nama = '';
   String username = '';
+  String currentUserId = '';
   String saldo = '';
   final _auth = Auth();
 
@@ -28,7 +31,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     nama = sharedPrefs.getString('nama');
     username = sharedPrefs.getString('username');
+    currentUserId = sharedPrefs.getString('userId');
     saldo = sharedPrefs.getString('saldo');
+    _transaksi.currentUserSaldo(userId: int.parse(currentUserId)).then((value) {
+      setState(() {
+        saldo = value[0]['saldo'];
+      });
+    });
   }
 
   @override

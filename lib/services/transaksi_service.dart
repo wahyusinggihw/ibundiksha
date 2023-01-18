@@ -5,7 +5,7 @@ import 'package:ibundiksha/services/notif_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Transaksi {
-  String url = "http://apikoperasi.rey1024.com/";
+  String url = "http://apikoperasi.rey1024.com";
   Dio dio = Dio();
   SharedPrefs sharedPrefs = SharedPrefs();
   MyNotificationService notifService = MyNotificationService();
