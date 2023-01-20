@@ -20,5 +20,5 @@ Tampilan dari aplikasi
 - Home screen
 <img src="https://user-images.githubusercontent.com/63113423/193097033-6458839e-6b00-4709-be82-49f5eb67b31e.png" width="250"/>
 
-#Link YouTube Presentasi
+# Link YouTube Presentasi
 https://youtu.be/RJYhMbTd08M
