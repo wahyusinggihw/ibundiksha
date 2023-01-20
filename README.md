@@ -22,3 +22,7 @@ Tampilan dari aplikasi
 
 # Link YouTube Presentasi
 https://youtu.be/RJYhMbTd08M
+
+# Link Download APK
+[Ibundiksha v1.0.0](https://github.com/wahyusinggihw/ibundiksha/raw/master/app-release.apk)
+
